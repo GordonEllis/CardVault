@@ -1,0 +1,41 @@
+﻿<Properties StartupConfiguration="hello">
+  <MonoDevelop.Ide.ItemProperties.Assets.Service PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Gateway/Controllers/OrdersController.cs">
+    <Files>
+      <File FileName="Orders.Service/OrderContext.cs" Line="1" Column="1" />
+      <File FileName="Orders.Service/OrdersService.cs" Line="12" Column="33" />
+      <File FileName="Orders.Service/Models/OrderLine.cs" Line="31" Column="1" />
+      <File FileName="Orders.Service/Models/Order.cs" Line="34" Column="18" />
+      <File FileName="Gateway/Controllers/OrdersController.cs" Line="37" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.IdentityServer PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/paulevaris/Desktop/BG/bg-mafi-prototype/server/Gateway/Controllers/OrdersController.cs" relfile="Gateway/Controllers/OrdersController.cs" line="37" column="1" />
+      <Breakpoint file="/Users/paulevaris/Desktop/BG/bg-mafi-prototype/server/Gateway/Controllers/OrdersController.cs" relfile="Gateway/Controllers/OrdersController.cs" line="38" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Gateway PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.Orders.Service PreferredExecutionTarget="MonoDevelop.Default" />
+  <MultiItemStartupConfigurations>
+    <MultiItemSolutionRunConfiguration Id="hello" Name="hello">
+      <Items>
+        <StartupItem ItemId="{D26B346B-DD30-4BDF-96CD-8B4C1F91012F}" ItemName="Gateway" ConfigurationId="Default" />
+        <StartupItem ItemId="{2FC85F67-6372-4A0B-9C36-A100B382DEFD}" ItemName="IdentityServer" ConfigurationId="Default" />
+        <StartupItem ItemId="{1590E641-EE75-418F-9000-EBD3DF8512F2}" ItemName="Orders.Service" ConfigurationId="Default" />
+      </Items>
+    </MultiItemSolutionRunConfiguration>
+    <MultiItemSolutionRunConfiguration Id="orderssss" Name="orderssss">
+      <Items>
+        <StartupItem ItemId="{D26B346B-DD30-4BDF-96CD-8B4C1F91012F}" ItemName="Gateway" ConfigurationId="Default" />
+        <StartupItem ItemId="{2FC85F67-6372-4A0B-9C36-A100B382DEFD}" ItemName="IdentityServer" ConfigurationId="Default" />
+        <StartupItem ItemId="{1590E641-EE75-418F-9000-EBD3DF8512F2}" ItemName="Orders.Service" ConfigurationId="Default" />
+      </Items>
+    </MultiItemSolutionRunConfiguration>
+  </MultiItemStartupConfigurations>
+  <MonoDevelop.Ide.ItemProperties.Valuations.Service PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.Portfolios.Service PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>

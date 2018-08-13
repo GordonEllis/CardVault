@@ -1,0 +1,15 @@
+C:\Dev\BG\bg-mafi-prototype\server\Assets.Service\bin\Debug\netcoreapp2.0\Assets.Service.deps.json
+C:\Dev\BG\bg-mafi-prototype\server\Assets.Service\bin\Debug\netcoreapp2.0\Assets.Service.runtimeconfig.json
+C:\Dev\BG\bg-mafi-prototype\server\Assets.Service\bin\Debug\netcoreapp2.0\Assets.Service.runtimeconfig.dev.json
+C:\Dev\BG\bg-mafi-prototype\server\Assets.Service\bin\Debug\netcoreapp2.0\Assets.Service.dll
+C:\Dev\BG\bg-mafi-prototype\server\Assets.Service\bin\Debug\netcoreapp2.0\Assets.Service.pdb
+C:\Dev\BG\bg-mafi-prototype\server\Assets.Service\bin\Debug\netcoreapp2.0\Portfolios.Service.dll
+C:\Dev\BG\bg-mafi-prototype\server\Assets.Service\bin\Debug\netcoreapp2.0\QueueHandler.dll
+C:\Dev\BG\bg-mafi-prototype\server\Assets.Service\bin\Debug\netcoreapp2.0\Portfolios.Service.pdb
+C:\Dev\BG\bg-mafi-prototype\server\Assets.Service\bin\Debug\netcoreapp2.0\QueueHandler.pdb
+C:\Dev\BG\bg-mafi-prototype\server\Assets.Service\obj\Debug\netcoreapp2.0\Assets.Service.csprojResolveAssemblyReference.cache
+C:\Dev\BG\bg-mafi-prototype\server\Assets.Service\obj\Debug\netcoreapp2.0\Assets.Service.csproj.CoreCompileInputs.cache
+C:\Dev\BG\bg-mafi-prototype\server\Assets.Service\obj\Debug\netcoreapp2.0\Assets.Service.AssemblyInfoInputs.cache
+C:\Dev\BG\bg-mafi-prototype\server\Assets.Service\obj\Debug\netcoreapp2.0\Assets.Service.AssemblyInfo.cs
+C:\Dev\BG\bg-mafi-prototype\server\Assets.Service\obj\Debug\netcoreapp2.0\Assets.Service.dll
+C:\Dev\BG\bg-mafi-prototype\server\Assets.Service\obj\Debug\netcoreapp2.0\Assets.Service.pdb
