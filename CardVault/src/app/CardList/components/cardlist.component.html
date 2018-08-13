@@ -1,0 +1,41 @@
+<div>
+  <div class="description-filter">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter on Description">
+    </mat-form-field>
+  </div>
+
+  <button mat-raised-button (click)="addItem()">Add New Card</button>
+  
+  <mat-table #table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="CardName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="ManaCost">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Cost </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.manaCost}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="CMC">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> CMC </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.convertedManaCost}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="CardSet">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Set </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.set}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Rarity">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Rarity </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.rarity}} </mat-cell>
+    </ng-container>
+
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
