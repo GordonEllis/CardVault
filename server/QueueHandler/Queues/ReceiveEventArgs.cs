@@ -8,7 +8,7 @@
             Acknowledge = acknowledge;
         }
 
-        public TMessage Message { get; private set; }
+        public TMessage Message { get; }
         public bool Acknowledge { get; set; }
     }
 }

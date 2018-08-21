@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Gateway.Services;
-using Cards.Models;
-using System.Threading.Tasks;
-using Cards;
+﻿using Cards.Client;
+using Cards.Client.Models;
 using Gateway.Configuration;
+using Gateway.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Gateway.Controllers
 {

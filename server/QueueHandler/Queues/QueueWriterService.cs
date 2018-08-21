@@ -4,7 +4,6 @@ using QueueHandler.Messages;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
-using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,25 +13,40 @@ namespace QueueHandler.Queues
     {
         #region -  Constructor  -
 
-        protected QueueWriterService(ConnectionFactory connectionFactory, ExchangeConfiguration exchange) : base(connectionFactory, exchange) { }
-        protected QueueWriterService(ConnectionFactory connectionFactory, ExchangeConfiguration exchange, IMessageHandler messageHandler) : base(connectionFactory, exchange, messageHandler) { }
+        protected QueueWriterService(ConnectionFactory connectionFactory, ExchangeConfiguration exchange) : this(connectionFactory, exchange, null) { }
+
+        protected QueueWriterService(
+            ConnectionFactory connectionFactory,
+            ExchangeConfiguration exchange,
+            IMessageHandler messageHandler
+        ) : base(connectionFactory, messageHandler)
+        {
+            Exchange = exchange;
+        }
+
+        #endregion
+
+        #region -  Properties  -
+
+        protected ExchangeConfiguration Exchange { get; }
 
         #endregion
 
         #region -  Methods  -
 
-        protected void Write<TMessage>(QueueConfiguration queue, TMessage value)
+        protected void Write<TMessage>(QueueConfiguration queue, TMessage value, string routingKey = null)
         {
+            routingKey = routingKey ?? queue.Name;
             EnsureQueueExists(queue);
             var sendProps = Channel.CreateBasicProperties();
             sendProps.Persistent = true;
             var messageBody = MessageHandler.Encode(value);
-            Channel.BasicPublish(Exchange.Name, queue.Name, sendProps, messageBody);
-            Console.WriteLine($"Message written to {Exchange.Name}.{queue.Name}");
+            Channel.BasicPublish(Exchange.Name, routingKey, sendProps, messageBody);
         }
 
-        protected async Task<MessageResponse<TResponse>> WriteAndReply<TMessage, TResponse>(QueueConfiguration queue, TMessage value, int millisecondsTimeout = -1, CancellationToken cancellationToken = default(CancellationToken))
+        protected async Task<MessageResponse<TResponse>> WriteAndReply<TMessage, TResponse>(QueueConfiguration queue, TMessage value, string routingKey = null, int millisecondsTimeout = -1, CancellationToken cancellationToken = default(CancellationToken))
         {
+            routingKey = routingKey ?? queue.Name;
             EnsureQueueExists(queue);
 
             // Set up the queue that the reply will be written to.
@@ -45,34 +59,29 @@ namespace QueueHandler.Queues
             sendProps.ReplyTo = replyQueue;
 
             // Post our message.
-            Channel.BasicPublish(Exchange.Name, queue.Name, sendProps, MessageHandler.Encode(value));
-            Console.WriteLine($"Message written to {Exchange.Name}.{queue.Name}. Waiting on response...");
-
+            Channel.BasicPublish(Exchange.Name, routingKey, sendProps, MessageHandler.Encode(value));
+            
             // Wait for a response.
             var replyCollection = new AsyncQueue<MessageResponse<TResponse>>();
-            void consume(object sender, BasicDeliverEventArgs ea)
+            void Consume(object sender, BasicDeliverEventArgs ea)
             {
                 if (ea.BasicProperties.CorrelationId == correlationId)
                 {
-                    Console.WriteLine($"Reply received for {Exchange.Name}.{queue.Name}.");
                     var reply = new MessageResponse<TResponse>();
                     if (ea.BasicProperties.Type == nameof(Exception))
                     {
-                        Console.WriteLine($"Reply for {Exchange.Name}.{queue.Name} contains an error.");
                         reply.Success = false;
                         reply.Error = MessageHandler.Decode<ErrorMessage>(ea.Body);
                     }
                     else
                     {
-                        Console.WriteLine($"Reply for {Exchange.Name}.{queue.Name} was successful.");
                         reply.Success = true;
                         reply.Response = MessageHandler.Decode<TResponse>(ea.Body);
                     }
                     replyCollection.Enqueue(reply);
-                    Console.WriteLine($"Reply for {Exchange.Name}.{queue.Name} added to async queue.");
-                }
-            };
-            ConsumeQueue(replyQueue, consume);
+                    }
+            }
+            ConsumeQueue(replyQueue, Consume);
 
             // Wait for something to be added to the collection, then return it.
             return await replyCollection.DequeueAsync(millisecondsTimeout, cancellationToken);

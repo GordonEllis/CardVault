@@ -1,0 +1,16 @@
+C:\Dev\TheCardVault\CardVault\server\Gateway\bin\Debug\netcoreapp2.1\Gateway.deps.json
+C:\Dev\TheCardVault\CardVault\server\Gateway\bin\Debug\netcoreapp2.1\Gateway.runtimeconfig.json
+C:\Dev\TheCardVault\CardVault\server\Gateway\bin\Debug\netcoreapp2.1\Gateway.runtimeconfig.dev.json
+C:\Dev\TheCardVault\CardVault\server\Gateway\bin\Debug\netcoreapp2.1\Gateway.dll
+C:\Dev\TheCardVault\CardVault\server\Gateway\bin\Debug\netcoreapp2.1\Gateway.pdb
+C:\Dev\TheCardVault\CardVault\server\Gateway\bin\Debug\netcoreapp2.1\Cards.Client.dll
+C:\Dev\TheCardVault\CardVault\server\Gateway\bin\Debug\netcoreapp2.1\QueueHandler.dll
+C:\Dev\TheCardVault\CardVault\server\Gateway\bin\Debug\netcoreapp2.1\Cards.Client.pdb
+C:\Dev\TheCardVault\CardVault\server\Gateway\bin\Debug\netcoreapp2.1\QueueHandler.pdb
+C:\Dev\TheCardVault\CardVault\server\Gateway\obj\Debug\netcoreapp2.1\Gateway.csprojAssemblyReference.cache
+C:\Dev\TheCardVault\CardVault\server\Gateway\obj\Debug\netcoreapp2.1\Gateway.csproj.CoreCompileInputs.cache
+C:\Dev\TheCardVault\CardVault\server\Gateway\obj\Debug\netcoreapp2.1\Gateway.AssemblyInfoInputs.cache
+C:\Dev\TheCardVault\CardVault\server\Gateway\obj\Debug\netcoreapp2.1\Gateway.AssemblyInfo.cs
+C:\Dev\TheCardVault\CardVault\server\Gateway\obj\Debug\netcoreapp2.1\Gateway.csproj.CopyComplete
+C:\Dev\TheCardVault\CardVault\server\Gateway\obj\Debug\netcoreapp2.1\Gateway.dll
+C:\Dev\TheCardVault\CardVault\server\Gateway\obj\Debug\netcoreapp2.1\Gateway.pdb

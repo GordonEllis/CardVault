@@ -3,20 +3,20 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Cards
+namespace Cards.Service
 {
     public class ModelMapper
     {
-        public static Cards.Models.Card MapCardData(JObject source)
+        public static Client.Models.Card MapCardData(JObject source)
         {
-            Cards.Models.Card target = new Cards.Models.Card();
+            Client.Models.Card target = new Client.Models.Card();
 
             target.Id = source["id"].Value<string>();
             target.Name = source["name"].Value<string>();
             //target.ImageURIs = source["image_uris"].Value<string[]>();
             target.ManaCost = source["mana_cost"].Value<string>();
             target.ConvertedManaCost = source["cmc"].Value<int>();
-            target.Type = source["type_line"].Value<string>();
+            //target.Type = source["type_line"].Value<string>();
             target.Text = source["oracle_text"].Value<string>();
             //target.Colours = source["colors"].Value<string[]>();
             target.Set = source["set"].Value<string>();
