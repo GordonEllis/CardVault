@@ -1,0 +1,9 @@
+C:\Dev\TheCardVault\CardVault\server\QueueHandler\bin\Debug\netcoreapp2.1\QueueHandler.deps.json
+C:\Dev\TheCardVault\CardVault\server\QueueHandler\bin\Debug\netcoreapp2.1\QueueHandler.dll
+C:\Dev\TheCardVault\CardVault\server\QueueHandler\bin\Debug\netcoreapp2.1\QueueHandler.pdb
+C:\Dev\TheCardVault\CardVault\server\QueueHandler\obj\Debug\netcoreapp2.1\QueueHandler.csprojAssemblyReference.cache
+C:\Dev\TheCardVault\CardVault\server\QueueHandler\obj\Debug\netcoreapp2.1\QueueHandler.csproj.CoreCompileInputs.cache
+C:\Dev\TheCardVault\CardVault\server\QueueHandler\obj\Debug\netcoreapp2.1\QueueHandler.AssemblyInfoInputs.cache
+C:\Dev\TheCardVault\CardVault\server\QueueHandler\obj\Debug\netcoreapp2.1\QueueHandler.AssemblyInfo.cs
+C:\Dev\TheCardVault\CardVault\server\QueueHandler\obj\Debug\netcoreapp2.1\QueueHandler.dll
+C:\Dev\TheCardVault\CardVault\server\QueueHandler\obj\Debug\netcoreapp2.1\QueueHandler.pdb

@@ -1,5 +1,4 @@
-﻿using QueueHandler.Exchanges;
-using QueueHandler.Messages;
+﻿using QueueHandler.Messages;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
@@ -10,29 +9,24 @@ namespace QueueHandler.Queues
     {
         #region -  Constructor  -
 
-        public QueueService(ConnectionFactory connectionFactory, ExchangeConfiguration exchange) : this(connectionFactory, exchange, null) { }
-        public QueueService(ConnectionFactory connectionFactory, ExchangeConfiguration exchange, IMessageHandler messageHandler)
+        protected QueueService(ConnectionFactory connectionFactory) : this(connectionFactory, null) { }
+        protected QueueService(ConnectionFactory connectionFactory, IMessageHandler messageHandler)
         {
             ConnectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory), "The supplied connection factory is invalid.");
-            Exchange = exchange ?? throw new ArgumentNullException(nameof(exchange), "The supplied exchange configuration is invalid.");
-
             Connection = connectionFactory.CreateConnection();
             MessageHandler = messageHandler ?? new DefaultMessageHandler();
             Channel = Connection.CreateModel();
             Channel.BasicQos(0, 1, false);
-
-            EnsureExchangeExists(exchange);
         }
 
         #endregion
 
         #region -  Properties  -
 
-        protected ConnectionFactory ConnectionFactory { get; private set; }
-        protected IConnection Connection { get; private set; }
-        protected IModel Channel { get; private set; }
-        protected ExchangeConfiguration Exchange { get; private set; }
-        protected IMessageHandler MessageHandler { get; private set; }
+        protected ConnectionFactory ConnectionFactory { get; }
+        protected IConnection Connection { get; }
+        protected IModel Channel { get; }
+        protected IMessageHandler MessageHandler { get; }
 
         #endregion
 
@@ -41,14 +35,11 @@ namespace QueueHandler.Queues
         protected void EnsureQueueExists(QueueConfiguration config)
         {
             Channel.QueueDeclare(config.Name, config.Durable, config.Exclusive, config.AutoDelete);
-            Channel.QueueBind(config.Name, Exchange.Name, config.Name);
-            Console.WriteLine($"Ensured that queue {Exchange.Name}.{config.Name} exists and is bound.");
-        }
-
-        protected void EnsureExchangeExists(ExchangeConfiguration config)
-        {
-            Channel.ExchangeDeclare(config.Name, config.Type, config.Durable, config.AutoDelete);
-            Console.WriteLine($"Ensured that exchange {config.Name} exists.");
+            foreach (var exchange in config.Exchanges)
+            {
+                Channel.ExchangeDeclare(exchange.Name, exchange.Type, exchange.Durable, exchange.AutoDelete);
+                Channel.QueueBind(config.Name, exchange.Name, config.BindingKey ?? config.Name);
+            }
         }
 
         protected EventingBasicConsumer ConsumeQueue(string queueName, EventHandler<BasicDeliverEventArgs> handler)
@@ -56,7 +47,6 @@ namespace QueueHandler.Queues
             var consumer = new EventingBasicConsumer(Channel);
             consumer.Received += handler;
             Channel.BasicConsume(queueName, false, consumer);
-            Console.WriteLine($"Listening on {Exchange.Name}.{queueName}...");
             return consumer;
         }
 
@@ -64,7 +54,7 @@ namespace QueueHandler.Queues
 
         #region -  IDisposable Support  -
 
-        private bool _disposed = false;
+        private bool _disposed;
 
         protected virtual void Dispose(bool disposing)
         {

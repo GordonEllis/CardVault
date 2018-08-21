@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Cards.Models;
+using Cards.Client.Models;
 using QueueHandler;
-using System.Net.Http;
 
-namespace Cards
+namespace Cards.Service.Context
 {
     public class CardContext : DbContext
     {
@@ -12,17 +11,9 @@ namespace Cards
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = ConfigurationManager.Configuration.GetConnectionString("Scryfall");
-            var _httpRequest = new HttpRequestMessage();
-            //HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(new System.Uri(connectionString + "c3dab325-8f4f-4288-9f3f-960e52b4335b").ToString());
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Card>()
-                .HasKey(a => new { a.Id });
+            //var connectionString = ConfigurationManager.Configuration.GetConnectionString("Hiroku");
+            var connectionString = "User ID=jqoleiwwdbvcnf;Password=247091fbf2579044d7f48585703d54e5ea941e7b2600cdee0967d3cfa51c4fbd;Host=ec2-54-83-203-198.compute-1.amazonaws.com;Port=5432;Database=d8651d20v8iq3h;Pooling=true;Use SSL Stream=True;SSL Mode=Require;TrustServerCertificate=True;";
+            optionsBuilder.UseNpgsql(connectionString);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using QueueHandler.Exchanges;
-using QueueHandler.Messages;
+﻿using QueueHandler.Messages;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
@@ -11,8 +10,8 @@ namespace QueueHandler.Queues
     {
         #region -  Constructor  -
 
-        protected QueueReaderService(ConnectionFactory connectionFactory, ExchangeConfiguration exchange) : base(connectionFactory, exchange) { }
-        protected QueueReaderService(ConnectionFactory connectionFactory, ExchangeConfiguration exchange, IMessageHandler messageHandler) : base(connectionFactory, exchange, messageHandler) { }
+        protected QueueReaderService(ConnectionFactory connectionFactory) : base(connectionFactory) { }
+        protected QueueReaderService(ConnectionFactory connectionFactory, IMessageHandler messageHandler) : base(connectionFactory, messageHandler) { }
 
         #endregion
 
@@ -21,7 +20,7 @@ namespace QueueHandler.Queues
         protected Task<EventingBasicConsumer> Read<TMessage>(QueueConfiguration queue, bool autoAck, Func<object, ReceiveEventArgs<TMessage>, Task> handler)
         {
             EnsureQueueExists(queue);
-            async void messageHandlerAsync(object sender, BasicDeliverEventArgs args)
+            async void MessageHandlerAsync(object sender, BasicDeliverEventArgs args)
             {
                 TMessage message = MessageHandler.Decode<TMessage>(args.Body);
                 var receivedArgs = new ReceiveEventArgs<TMessage>(message, autoAck);
@@ -33,20 +32,18 @@ namespace QueueHandler.Queues
                 {
                     if (receivedArgs.Acknowledge)
                     {
-                        Console.WriteLine($"Acknowledged message for {Exchange.Name}.{queue.Name}.");
-                        Channel.BasicAck(deliveryTag: args.DeliveryTag, multiple: false);
+                        Channel.BasicAck(args.DeliveryTag, false);
                     }
                 }
             }
-            return Task.FromResult(ConsumeQueue(queue.Name, messageHandlerAsync));
+            return Task.FromResult(ConsumeQueue(queue.Name, MessageHandlerAsync));
         }
 
         protected Task<EventingBasicConsumer> ReadAndReply<TMessage, TResponse>(QueueConfiguration queue, bool autoAck, Func<object, ReceiveEventArgs<TMessage>, Task<TResponse>> handler)
         {
             EnsureQueueExists(queue);
-            async void messageHandlerAsync(object sender, BasicDeliverEventArgs args)
+            async void MessageHandlerAsync(object sender, BasicDeliverEventArgs args)
             {
-                Console.WriteLine($"Message received on {Exchange.Name}.{queue.Name}.");
                 var props = args.BasicProperties;
                 var replyProps = Channel.CreateBasicProperties();
                 replyProps.CorrelationId = props.CorrelationId;
@@ -62,20 +59,17 @@ namespace QueueHandler.Queues
                     if (!String.IsNullOrEmpty(props.ReplyTo))
                     {
                         var response = MessageHandler.Encode(result);
-                        Channel.BasicPublish(Exchange.Name, props.ReplyTo, basicProperties: replyProps, body: response);
-                        Console.WriteLine($"Reply sent to {Exchange.Name}.{queue.Name}.");
+                        Channel.BasicPublish(args.Exchange, props.ReplyTo, replyProps, response);
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error encountered handling message on {Exchange.Name}.{queue.Name}.");
                     // Throw or return the error.
-                    if (!String.IsNullOrEmpty(props.ReplyTo))
+                    if (!string.IsNullOrEmpty(props.ReplyTo))
                     {
                         var response = MessageHandler.Encode(new ErrorMessage(ex));
                         replyProps.Type = nameof(Exception);
-                        Channel.BasicPublish(Exchange.Name, props.ReplyTo, basicProperties: replyProps, body: response);
-                        Console.WriteLine($"Reply address found. Responding with message.");
+                        Channel.BasicPublish(args.Exchange, props.ReplyTo, replyProps, response);
                     }
                     throw;
                 }
@@ -83,16 +77,11 @@ namespace QueueHandler.Queues
                 {
                     if (receivedArgs.Acknowledge)
                     {
-                        Console.WriteLine($"Acknowledged message for {Exchange.Name}.{queue.Name}.");
-                        Channel.BasicAck(deliveryTag: args.DeliveryTag, multiple: false);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Refusing to acknowledge message for {Exchange}.{queue.Name}.");
+                        Channel.BasicAck(args.DeliveryTag, false);
                     }
                 }
             }
-            return Task.FromResult(ConsumeQueue(queue.Name, messageHandlerAsync));
+            return Task.FromResult(ConsumeQueue(queue.Name, MessageHandlerAsync));
         }
 
         #endregion

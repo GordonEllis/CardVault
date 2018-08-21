@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Gateway.Configuration
 {
-    static class Queueing
+    internal static class Queueing
     {
         public static void ConfigureQueueing(this Startup startup, IServiceCollection services)
         {
