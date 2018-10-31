@@ -1,17 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatDialog, MatSort } from '@angular/material';
-import { DialogComponent } from './dialog';
 import { Store } from '@ngrx/store';
 import { AppState } from '@cv/state';
-import { CardItem } from '@cv/CardList/models';
-import { GetCards } from '@cv/CardList/store/cardlist.actions';
+import { CardItem } from '@cv/CardSearch/models';
+import { GetCards } from '@cv/CardSearch/store/cardsearch.actions';
 
 @Component({
-  selector: 'cardlist',
-  templateUrl: `cardlist.component.html`,
+  selector: 'cardsearch',
+  templateUrl: `cardsearch.component.html`,
 })
 
-export class CardListComponent implements OnInit {
+export class CardSearchComponent implements OnInit {
   dataSource:  MatTableDataSource<CardItem>;
   displayedColumns: string[] = ['CardName', 'Colors', 'ManaCost', 'Own', 'Type', 'CardSet', 'Rarity'];
   filterOption: string= '';
@@ -28,10 +27,6 @@ export class CardListComponent implements OnInit {
 
   ngOnInit(){
     this.store.dispatch(new GetCards());
-  }
-
-  addItem() {
-    this.dialog.open(DialogComponent);
   }
 
   applyFilter(filterValue: string) {

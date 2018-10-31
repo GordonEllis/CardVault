@@ -1,30 +1,31 @@
-import { CardItem } from './models';
-import * as CardListActions from './cardlist.actions';
 
-export interface CardListState {
+import * as CardSearchActions from './cardsearch.actions';
+import { CardItem } from '@cv/CardSearch/models';
+
+export interface CardSearchState {
   data: CardItem[];
   hasError: boolean;
   isLoading: boolean;
 }
 
-const initialState: CardListState = {
+const initialState: CardSearchState = {
   data: [],
   hasError: false,
   isLoading: false
 };
 
-export function CardListReducer(state = initialState, action: CardListActions.CardActions): CardListState {
+export function CardSearchReducer(state = initialState, action: CardSearchActions.CardActions): CardSearchState {
   switch (action.type) {
     
 
-    case CardListActions.GetCardsSuccess.TYPE: {
+    case CardSearchActions.GetCardsSuccess.TYPE: {
       console.log(action.items);
         return {
           ...state,
           data: action.items
         };
       }
-    case CardListActions.AddCardSuccess.TYPE: {
+    case CardSearchActions.AddCardSuccess.TYPE: {
       return {
         ...state,
         hasError: false,

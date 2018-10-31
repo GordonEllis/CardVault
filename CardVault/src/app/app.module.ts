@@ -8,14 +8,16 @@ import { AppComponent }  from './app.component';
 import { routes } from './app.routes';
 import { SharedModule } from './shared';
 import { EffectsModule } from '@ngrx/effects';
-import { CardListEffects, CardListService, CardListModule } from '@cv/CardList';
+import { CardListEffects, CardListService, CardListModule, CardListMockService } from '@cv/CardList';
 import { HttpClientModule } from '@angular/common/http';
-import { rootReducer } from './core';
+import { rootReducer } from './state';
+import { CoreModule } from '@cv/core';
 
 @NgModule({
   imports: [ 
     BrowserModule,
     CardListModule,
+    CoreModule,
     EffectsModule.forRoot([CardListEffects]),
     FormsModule,
     HttpClientModule,
@@ -25,7 +27,8 @@ import { rootReducer } from './core';
     StoreModule.forRoot(rootReducer),
   ],
   providers: [ 
-    CardListService
+    CardListService,
+    CardListMockService
   ],
   declarations: [ AppComponent ],
   bootstrap:    [ AppComponent ]

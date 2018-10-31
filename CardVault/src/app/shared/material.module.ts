@@ -4,7 +4,10 @@ import {
   MatButtonModule,
   MatDialogModule,
   MatFormFieldModule,
+  MatIconModule,
   MatInputModule,
+  MatMenuModule,
+  MatSelectModule,
   MatSortModule,
   MatToolbarModule,
   MatTableModule
@@ -14,7 +17,10 @@ const modules = [
   MatButtonModule,
   MatDialogModule,
   MatFormFieldModule,
+  MatIconModule,
   MatInputModule,
+  MatMenuModule,
+  MatSelectModule,
   MatSortModule,
   MatToolbarModule,
   MatTableModule

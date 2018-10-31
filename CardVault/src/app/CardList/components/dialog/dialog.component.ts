@@ -3,8 +3,8 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { AppState } from '@cv/core';
-import { AddCard } from '@cv/CardList/cardlist.actions';
+import { AppState } from '@cv/state';
+import { AddCard } from '@cv/CardList/store/cardlist.actions';
 import { CardItem } from '@cv/CardList/models';
 
 @Component({

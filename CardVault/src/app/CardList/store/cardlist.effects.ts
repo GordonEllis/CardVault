@@ -4,14 +4,15 @@ import { map, catchError, mergeMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import * as CardListActions from './cardlist.actions';
-import { CardListService } from './cardlist.service';
+import { CardListService, CardListMockService} from '@cv/CardList/service';
 
 @Injectable()
 export class CardListEffects {
 
   constructor(
     private action$: Actions,
-    private service: CardListService,
+    //private service: CardListService,
+    private service: CardListMockService
   ) { }
 
   @Effect() getItems$ = this.action$.pipe(
@@ -23,13 +24,13 @@ export class CardListEffects {
     )
   );
 
-  @Effect() addItem$ = this.action$.pipe(
-    ofType(CardListActions.AddCard.TYPE),
-    mergeMap((action: CardListActions.AddCard) =>
-      this.service.addItem(action.item)
-      .pipe(
-        map(item => new CardListActions.AddCardSuccess(item))
-      )
-    )
-  );
+  // @Effect() addItem$ = this.action$.pipe(
+  //   ofType(CardListActions.AddCard.TYPE),
+  //   mergeMap((action: CardListActions.AddCard) =>
+  //     this.service.addItem(action.item)
+  //     .pipe(
+  //       map(item => new CardListActions.AddCardSuccess(item))
+  //     )
+  //   )
+  // );
 }

@@ -1,17 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CardItem } from './models';
-import { environment } from '../../environments/environment';
+import { CardItem } from '@cv/CardSearch/models';
+import { environment } from 'environments/environment';
 import { Observable, of } from 'rxjs';
 
 @Injectable()
-export class CardListService {
+export class CardSearchService {
   public constructor(private http: HttpClient) { }
 
   getItems(cardIds?: string[]): Observable<CardItem[]> {
-    cardIds = ['c3dab325-8f4f-4288-9f3f-960e52b4335b'];
-    console.log(cardIds); 
-  return this.http.get<CardItem[]>(environment.apiBase + 'cards', { params: { cardIds } });
+    return this.http.get<CardItem[]>(environment.apiBase + 'localData/collection');
   }
 
   addItem(item: CardItem): Observable<CardItem> {

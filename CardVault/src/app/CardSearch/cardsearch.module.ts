@@ -2,16 +2,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CardListComponent, DialogComponent } from '@cv/CardList/components';
-import { CardListEffects, CardListReducer } from '@cv/CardList/store';
+import { CardSearchComponent } from '@cv/CardSearch/components';
+import { CardSearchEffects, CardSearchReducer } from '@cv/CardSearch/store';
 import { SharedModule } from '@cv/shared';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
-    CardListComponent,
-    DialogComponent,
+    CardSearchComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -19,15 +18,14 @@ import { StoreModule } from '@ngrx/store';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    EffectsModule.forFeature([CardListEffects]),
-    StoreModule.forRoot(CardListReducer)
+    EffectsModule.forFeature([CardSearchEffects]),
+    StoreModule.forRoot(CardSearchReducer)
   ],
   exports: [
-    CardListComponent,
-    DialogComponent,
+    CardSearchComponent
   ],
-  entryComponents: [DialogComponent],
+  entryComponents: [],
   providers: [],
-  bootstrap: [CardListComponent]
+  bootstrap: [CardSearchComponent]
 })
-export class CardListModule { }
+export class CardSearchModule { }
