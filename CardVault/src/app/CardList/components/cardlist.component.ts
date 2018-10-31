@@ -2,10 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatDialog, MatSort } from '@angular/material';
 import { DialogComponent } from './dialog';
 import { Store } from '@ngrx/store';
-import { AppState } from '@cv/core';
-import { CardItem } from '@cv/CardList/Models';
-import { GetCards } from '@cv/CardList/cardlist.actions';
-
+import { AppState } from '@cv/state';
+import { CardItem } from '@cv/CardList/models';
+import { GetCards } from '@cv/CardList/store/cardlist.actions';
 
 @Component({
   selector: 'cardlist',
@@ -14,21 +13,13 @@ import { GetCards } from '@cv/CardList/cardlist.actions';
 
 export class CardListComponent implements OnInit {
   dataSource:  MatTableDataSource<CardItem>;
-  displayedColumns: string[] = ['CardName', 'ManaCost', 'CMC', 'CardSet', 'Rarity'];
+  displayedColumns: string[] = ['CardName', 'Colors', 'ManaCost', 'Own', 'Type', 'CardSet', 'Rarity'];
+  filterOption: string= '';
   
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public dialog: MatDialog,
-              private store: Store<AppState>) {
-    this.store.select(s => s.cardItems).subscribe(items =>{
-      console.log(items.data);
-      this.dataSource = new MatTableDataSource<CardItem>(items.data);
-      this.dataSource.filterPredicate = (data: CardItem, filter: string) => 
-      {
-        console.log(data.Name);
-       return  data.Name.toLowerCase().indexOf(filter) != -1;
-      }
-    })
+  constructor(public dialog: MatDialog, private store: Store<AppState>) {
+    this.store.select(s => s.cardItems).subscribe(items => this.setDataSourceData(items.data))
   }
 
   ngAfterViewInit() {
@@ -44,10 +35,45 @@ export class CardListComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  setDataSourceData(items: CardItem[]) {
+    this.dataSource = new MatTableDataSource<CardItem>(items);
+    this.dataSource.filterPredicate = (data: CardItem, filter: string) => {
+    let filterData;
+
+      switch(this.filterOption) {
+        case 'CardName': {
+          filterData = data.name;
+          break;
+        }
+        case 'Colors': {
+          filterData = data.colors.toString();
+          break;
+        }
+        case 'ManaCost': {
+          filterData = data.manaCost;
+          break;
+        }
+        case 'Own': {
+          filterData = data.quantity;
+          break;
+        }
+        case 'Type': {
+          filterData = data.typeLine;
+          break;
+        }
+        case 'CardSet': {
+          filterData = data.setName;
+          break;
+        }
+        case 'Rarity': {
+          filterData = data.rarity;
+          break;
+        }
+      }
+
+      return filterData.toLowerCase().indexOf(filter) != -1};
   }
 }
-
-

@@ -2,12 +2,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  CardListComponent,
-  DialogComponent,
-} from './components';
-import { CardListEffects } from './cardlist.effects';
-import { CardListReducer } from './cardlist.reducer';
+import { CardListComponent, DialogComponent } from '@cv/CardList/components';
+import { CardListEffects, CardListReducer } from '@cv/CardList/store';
 import { SharedModule } from '@cv/shared';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';

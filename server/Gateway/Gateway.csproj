@@ -19,6 +19,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cards.Client\Cards.Client.csproj" />
+<<<<<<< HEAD
+=======
+    <ProjectReference Include="..\LocalData.Client\LocalData.Client.csproj" />
+>>>>>>> major-updates
     <ProjectReference Include="..\QueueHandler\QueueHandler.csproj" />
   </ItemGroup>
 

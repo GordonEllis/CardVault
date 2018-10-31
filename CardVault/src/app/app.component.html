@@ -1,5 +1,13 @@
 <mat-toolbar color="primary">
-   <h1>Not wasting my time app</h1>
+  <button mat-icon-button [matMenuTriggerFor]="mainSideMenu"> <mat-icon>menu</mat-icon></button>
+  <mat-menu #mainSideMenu="matMenu">
+    <button mat-menu-item (click)="setActivePage('list')">Full Card List</button>
+    <button mat-menu-item (click)="setActivePage('search')">Search Cards</button>
+    <button mat-menu-item (click)="setActivePage('build')">Build Deck</button>
+    <button mat-menu-item (click)="setActivePage('decks')">Constructed Decks</button>
+  </mat-menu>
+  
+  <h1>Card Vault</h1>
 </mat-toolbar>
 
 <div>

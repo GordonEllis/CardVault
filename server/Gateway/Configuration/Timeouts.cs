@@ -4,6 +4,6 @@
     {
         private Timeouts() { }
 
-        public const int GLOBAL = 5000;
+        public const int GLOBAL = -1;
     }
 }

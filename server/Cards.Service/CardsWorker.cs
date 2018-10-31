@@ -54,6 +54,11 @@ namespace Cards.Service
             cardDetails.Add(ModelMapper.MapCardData(parsed));
             return cardDetails.ToArray();
         }
+<<<<<<< HEAD
     }
     #endregion
+=======
+        #endregion
+    }
+>>>>>>> major-updates
 }

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cards.Client\Cards.Client.csproj" />
+    <ProjectReference Include="..\LocalData.Client\LocalData.Client.csproj" />
+    <ProjectReference Include="..\QueueHandler\QueueHandler.csproj" />
+  </ItemGroup>
+
+</Project>
