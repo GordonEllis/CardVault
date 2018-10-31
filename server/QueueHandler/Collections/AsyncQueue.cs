@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QueueHandler.Collections
 {
-    class AsyncQueue<T> : IDisposable
+    internal class AsyncQueue<T> : IDisposable
     {
         #region -  Fields  -
 
@@ -47,8 +47,17 @@ namespace QueueHandler.Collections
         public async Task<T> DequeueAsync(int millisecondsTimeout, CancellationToken cancellationToken = default(CancellationToken))
         {
             var entered = await _semaphore.WaitAsync(millisecondsTimeout, cancellationToken);
-            if (!entered) { throw new TimeoutException(); }
-            if (!_queue.TryDequeue(out T item)) { throw new InvalidOperationException("Entered semaphore with empty queue."); }
+
+            if (!entered)
+            {
+                throw new TimeoutException();
+            }
+
+            if (!_queue.TryDequeue(out T item))
+            {
+                throw new InvalidOperationException("Entered semaphore with empty queue.");
+            }
+
             return item;
         }
 
@@ -56,7 +65,7 @@ namespace QueueHandler.Collections
 
         #region -  IDisposable Support  -
 
-        private bool _disposed = false;
+        private bool _disposed;
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)

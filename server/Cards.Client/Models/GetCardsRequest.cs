@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cards.Models
+﻿namespace Cards.Client.Models
 {
     public class GetCardsRequest
     {

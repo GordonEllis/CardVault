@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Gateway.Services;
-using Cards.Models;
-using System.Threading.Tasks;
-using Cards;
+﻿using Cards.Client;
+using Cards.Client.Models;
 using Gateway.Configuration;
+using Gateway.Services;
+using LocalData.Client;
+using LocalData.Client.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Gateway.Controllers
 {
@@ -14,10 +17,12 @@ namespace Gateway.Controllers
     public class CardsController : Controller
     {
         CardsClient _client;
+        LocalDataClient _client2;
 
         public CardsController(QueueingService queueing)
         {
             _client = new CardsClient(queueing.ConnectionFactory);
+            _client2 = new LocalDataClient(queueing.ConnectionFactory);
         }
 
         [HttpGet]
@@ -25,8 +30,12 @@ namespace Gateway.Controllers
         {
             var request = new GetCardsRequest() { CardIds = cardIds };
             var reply = await _client.GetCards(request, Timeouts.GLOBAL);
+
+            var request2 = new LoadCardDataRequest() { CardNames = cardIds };
+			var reply2 = await _client2.GetCollectionData(request2, Timeouts.GLOBAL);
+			
             if (!reply.Success) { return StatusCode(500); }
-            return Ok(reply.Response);
+            return Ok(reply2.Response);
         }
     }
 }

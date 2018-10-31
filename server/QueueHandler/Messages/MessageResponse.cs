@@ -1,6 +1,4 @@
-﻿using QueueHandler.Messages;
-
-namespace QueueHandler.Queues
+﻿namespace QueueHandler.Messages
 {
     public class MessageResponse<TResponse>
     {
