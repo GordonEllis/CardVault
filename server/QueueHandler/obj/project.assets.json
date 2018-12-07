@@ -4513,11 +4513,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Dev\\TheCardVault\\CardVault\\server\\QueueHandler\\QueueHandler.csproj",
+      "projectUniqueName": "C:\\Dev\\CardVault\\server\\QueueHandler\\QueueHandler.csproj",
       "projectName": "QueueHandler",
-      "projectPath": "C:\\Dev\\TheCardVault\\CardVault\\server\\QueueHandler\\QueueHandler.csproj",
+      "projectPath": "C:\\Dev\\CardVault\\server\\QueueHandler\\QueueHandler.csproj",
       "packagesPath": "C:\\Users\\gellis\\.nuget\\packages\\",
-      "outputPath": "C:\\Dev\\TheCardVault\\CardVault\\server\\QueueHandler\\obj\\",
+      "outputPath": "C:\\Dev\\CardVault\\server\\QueueHandler\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

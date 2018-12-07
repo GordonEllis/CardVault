@@ -2,17 +2,13 @@
 using Cards.Client.Models;
 using Gateway.Configuration;
 using Gateway.Services;
-<<<<<<< HEAD
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-=======
 using LocalData.Client;
 using LocalData.Client.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
->>>>>>> major-updates
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System;
 
 namespace Gateway.Controllers
 {
@@ -22,25 +18,70 @@ namespace Gateway.Controllers
     public class CardsController : Controller
     {
         CardsClient _client;
-        LocalDataClient _client2;
 
         public CardsController(QueueingService queueing)
         {
             _client = new CardsClient(queueing.ConnectionFactory);
-            _client2 = new LocalDataClient(queueing.ConnectionFactory);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(string[] cardIds)
+        [Route("")]
+        public async Task<IActionResult> GetCards(string[] cardIds)
         {
             var request = new GetCardsRequest() { CardIds = cardIds };
             var reply = await _client.GetCards(request, Timeouts.GLOBAL);
 
-            var request2 = new LoadCardDataRequest() { CardNames = cardIds };
-			var reply2 = await _client2.GetCollectionData(request2, Timeouts.GLOBAL);
-			
             if (!reply.Success) { return StatusCode(500); }
-            return Ok(reply2.Response);
+            return Ok(reply.Response);
+        }
+
+        [HttpPost]
+        [Route("")]
+        public async Task<IActionResult> SaveCards(Card[] cards)
+        {
+            var request = new SaveCardsRequest() { CardData = cards };
+            var reply = await _client.SaveCards(request, Timeouts.GLOBAL);
+            return Ok(reply.Response);
+        }
+
+
+        private Card[] Convert(CollectionData[] data)
+        {
+            List<Card> target = new List<Card>();
+
+            foreach (CollectionData item in data)
+            {
+                try
+                {
+                    Card newCard = new Card();
+                    newCard.Id = item.Id;
+                    newCard.Name = item.Name;
+                    if (newCard.Name == "Shed Weakness")
+                        newCard.ImageUris = item.ImageUris == null ? "" : item.ImageUris.ToString();
+                    newCard.ManaCost = item.ManaCost;
+                    newCard.ConvertedManaCost = item.Cmc == null ? 0 : (int)item.Cmc;
+                    newCard.Type = item.TypeLine;
+                    newCard.Text = item.OracleText;
+                    newCard.ColorIdentity = item.Colors == null ? "0" : item.Colors.ToString();
+                    newCard.Set = item.Set;
+                    newCard.SetName = item.SetName;
+                    newCard.Rarity = item.Rarity;
+                    newCard.Value = 0;
+                    newCard.Quantity = item.Quantity;
+
+                    var alreadyExists = target.Find(i => i.Id == newCard.Id);
+                    if (alreadyExists == null)
+                        target.Add(newCard);
+                    else
+                        alreadyExists.Quantity += newCard.Quantity;
+                }
+                catch (Exception ex)
+                {
+                    Console.Out.WriteLine("Something went wrong " + item);
+                }
+
+            }
+            return target.ToArray();
         }
     }
 }

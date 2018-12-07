@@ -61,7 +61,7 @@ export class CardListComponent implements OnInit {
           break;
         }
         case 'Type': {
-          filterData = data.typeLine;
+          filterData = data.type;
           break;
         }
         case 'CardSet': {

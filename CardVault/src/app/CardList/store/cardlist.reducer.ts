@@ -19,6 +19,7 @@ export function CardListReducer(state = initialState, action: CardListActions.Ca
     
 
     case CardListActions.GetCardsSuccess.TYPE: {
+      console.log(action.items[0])
         return {
           ...state,
           data: action.items

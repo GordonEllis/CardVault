@@ -9,7 +9,7 @@ export class CardListService {
   public constructor(private http: HttpClient) { }
 
   getItems(cardIds?: string[]): Observable<CardItem[]> {
-    return this.http.get<CardItem[]>(environment.apiBase + 'localData/collection');
+    return this.http.get<CardItem[]>(environment.apiBase + 'cards');
   }
 
   addItem(item: CardItem): Observable<CardItem> {
