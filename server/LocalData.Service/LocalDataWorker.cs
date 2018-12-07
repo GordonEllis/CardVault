@@ -16,94 +16,100 @@ namespace LocalData.Service
     class LocalDataWorker : QueueReaderService
     {
         #region - Fields - 
+        string scryfallDataLocation = "C:/Dev/CardVault/Data/scryfall-all-cards.json";
+        string spreadsheetFileLocation = "C:/Dev/CardVault/Data/LeagueCards.xlsx";
         #endregion
 
         #region -  Constructor  -
         public LocalDataWorker(ConnectionFactory factory) : base(factory)
         {
-            ReadAndReply<LoadCardDataRequest, LocalCardData[]>(Queueing.Queues.GetLocalCardData, true, GetLocalCardData);
-            ReadAndReply<LoadScryfallDataRequest, LocalScryfallData[]>(Queueing.Queues.GetLocalScryfallData, true, GetLocalScryfallData);
-			ReadAndReply<LoadCardDataRequest, CollectionData[]>(Queueing.Queues.GetCollectionData, true, GetCollecionData);
+			ReadAndReply<LoadCardDataRequest, (CollectionData[], LocalCardData[])>(Queueing.Queues.GetCollectionData, true, LoadDataFromSpreadsheet);
 		}
 
 		#endregion
 
 		#region -  Event Handlers  -
 
-		private async Task<CollectionData[]> GetCollecionData(object sender, ReceiveEventArgs<LoadCardDataRequest> e)
+		private Task<(CollectionData[], LocalCardData[])> LoadDataFromSpreadsheet(object sender, ReceiveEventArgs<LoadCardDataRequest> e)
 		{
-			var heldCards = GetLocalCardData(sender, e).Result.ToList();
-			var scryfallData = GetJson().Result.ToList();
+            var heldCards = GetLocalCardData(sender, e).Result;
+			var scryfallData = GetScryfallData(scryfallDataLocation).Result;
 
 			List<CollectionData> collectionData = new List<CollectionData>();
-			heldCards.ForEach(card =>
+            List<LocalCardData> errorCards = new List<LocalCardData>();
+            heldCards.ForEach(card =>
 			{
 				try
 				{
-					collectionData.Add(ModelMapper.MapCollectionData(scryfallData.First(d => d.Name == card.Name), card));
+                    var foundName = scryfallData.First(d => d.Name == card.Name);
+                    if(foundName != null)
+                    {
+                        collectionData.Add(ModelMapper.MapCollectionData(foundName, card));
+                    } else
+                    {
+                        errorCards.Add(card);
+                    }
+                    
 				}
-				catch (Exception x)
-				{}
+				catch
+				{
+                    errorCards.Add(card);
+                }
 			});
 
-			var result = collectionData.ToArray();
-			return result;
+            var result = (collectionData.ToArray(), errorCards.ToArray());
+			return Task.FromResult(result);
 		}
 
 
-		private async Task<LocalCardData[]> GetLocalCardData(object sender, ReceiveEventArgs<LoadCardDataRequest> e)
+		private async Task<List<LocalCardData>> GetLocalCardData(object sender, ReceiveEventArgs<LoadCardDataRequest> e)
         {
-            var allCards = new List<LocalCardData>();
-            allCards.AddRange(await GetCards("Rare"));
-            allCards.AddRange(await GetCards("Multi"));
-            allCards.AddRange(await GetCards("Red"));
-            allCards.AddRange(await GetCards("Blue"));
-            allCards.AddRange(await GetCards("Black"));
-            allCards.AddRange(await GetCards("Green"));
-            allCards.AddRange(await GetCards("White"));
-            var result = allCards.ToArray();
-            return allCards.ToArray();
+            List<LocalCardData> allCards = new List<LocalCardData>();
+            allCards.AddRange(await MapSpreadsheetData(spreadsheetFileLocation));
+            return allCards;
         }
 
-        private async Task<LocalScryfallData[]> GetLocalScryfallData(object sender, ReceiveEventArgs<LoadScryfallDataRequest> e)
-        {
-            var jsonList = await GetJson();
-			var returnlist = jsonList.Where(i => e.Message.CardNames.Contains(i.Name)).ToArray();
-			return returnlist;
-
-		}
-
-        private async Task<LocalScryfallData[]> GetJson()
+        private async Task<List<LocalScryfallData>> GetScryfallData(string scryfallDataLocation)
         {
             List<LocalScryfallData> items = new List<LocalScryfallData>();
             
-            using (StreamReader r = new StreamReader("C:/Dev/CardVault/Data/scryfall-all-cards.json"))
+            using (StreamReader r = new StreamReader(scryfallDataLocation))
             {
-                string json = r.ReadToEnd();
-				var jello = JsonConvert.DeserializeObject<dynamic[]>(json);
-				foreach (dynamic cardDetail in jello)
-					items.Add(ModelMapper.MapJsonData(cardDetail));
+				foreach (dynamic scryfallDetail in JsonConvert.DeserializeObject<dynamic[]>(r.ReadToEnd()))
+					items.Add(await ModelMapper.MapJsonData(scryfallDetail));
             }
-            return items.ToArray();
+
+            return items;
         }
 
 
-        private async Task<LocalCardData[]> GetCards(string type)
+        private Task<List<LocalCardData>> MapSpreadsheetData(string fileLocation)
         {
-            List<LocalCardData> cardList = new List<LocalCardData>();
-            var fileInfo = new FileInfo("C:/Dev/CardVault/Data/league" + type + ".xlsx");
-            var package = new ExcelPackage(fileInfo);
-            ExcelWorksheet workSheet = package.Workbook.Worksheets[1];
+            List<LocalCardData> spreadsheetCardList = new List<LocalCardData>();
+            var package = new ExcelPackage(new FileInfo(fileLocation));
+            var totalSheets = package.Workbook.Worksheets.Count;
 
-
-            for (int i = workSheet.Dimension.Start.Row;
-                i <= workSheet.Dimension.End.Row;
-                i++){
-                string cardName = workSheet.Cells[i, 1].Value.ToString();
-                int cardQuantity = Int32.Parse(workSheet.Cells[i, 2].Value.ToString());
-                cardList.Add(new LocalCardData { Name = cardName, Quantity = cardQuantity });
+            for(int i = 1; i <= totalSheets; i++)
+            {
+                ExcelWorksheet workSheet = package.Workbook.Worksheets[i];
+                for (int row = workSheet.Dimension.Start.Row + 1; row <= workSheet.Dimension.End.Row; row++)
+                {
+                    try
+                    {
+                        string spreadsheetCardName = workSheet.Cells[row, 2].Value.ToString();
+                        if (spreadsheetCardName != null)
+                        {
+                            int cardQuantity = Int32.Parse(workSheet.Cells[row, 3].Value.ToString());
+                            spreadsheetCardList.Add(new LocalCardData { Name = spreadsheetCardName, Quantity = cardQuantity });
+                        }
+                    } catch (Exception ex) {
+                        Console.Out.WriteLine("Error in mapping from spreadsheet " + ex);
+                    }
+                    
                 }
-            return cardList.ToArray();
+            }
+
+            return Task.FromResult(spreadsheetCardList);
         }
         #endregion
     }

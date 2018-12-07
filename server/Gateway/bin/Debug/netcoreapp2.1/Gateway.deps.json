@@ -25,6 +25,7 @@
       "Gateway/1.0.0": {
         "dependencies": {
           "Cards.Client": "1.0.0",
+          "LocalData.Client": "1.0.0",
           "Microsoft.AspNetCore.All": "2.0.5",
           "Microsoft.NETCore.App": "2.1.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.0.2",
@@ -4644,6 +4645,17 @@
           "Cards.Client.dll": {}
         }
       },
+      "LocalData.Client/1.0.0": {
+        "dependencies": {
+          "QueueHandler": "1.0.0"
+        },
+        "runtime": {
+          "LocalData.Client.dll": {}
+        },
+        "compile": {
+          "LocalData.Client.dll": {}
+        }
+      },
       "QueueHandler/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Configuration": "2.1.1",
@@ -6971,6 +6983,11 @@
       "hashPath": "windowsazure.storage.8.1.4.nupkg.sha512"
     },
     "Cards.Client/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "LocalData.Client/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

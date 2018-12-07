@@ -6,7 +6,7 @@ export interface CardItem {
      imageUris: Object,
      manaCost: string,
      cmc: number,
-     typeLine: string,
+     type: string,
      oracleText: string,
      loyalty: string,
      colors: Object,

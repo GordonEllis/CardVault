@@ -1,5 +1,4 @@
 ﻿using LocalData.Client;
-using Cards.Client.Models;
 using Gateway.Configuration;
 using Gateway.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -22,31 +21,11 @@ namespace Gateway.Controllers
         }
 
 		[HttpGet]
-		[Route("collection")]
-		public async Task<IActionResult> GetCollectionData(string[] cardNames)
+		[Route("")]
+		public async Task<IActionResult> LoadDataFromSpreadsheet()
 		{
-			var request = new LoadCardDataRequest() { CardNames = cardNames };
-			var reply = await _client.GetCollectionData(request, Timeouts.GLOBAL);
-			if (!reply.Success) { return StatusCode(500); }
-			return Ok(reply.Response);
-		}
-
-		[HttpGet]
-		[Route("localcard")]
-		public async Task<IActionResult> GetLocalCardData(string[] cardNames)
-        {
-            var request = new LoadCardDataRequest() { CardNames = cardNames };
-            var reply = await _client.GetLocalData(request, Timeouts.GLOBAL);
-            if (!reply.Success) { return StatusCode(500); }
-            return Ok(reply.Response);
-        }
-
-		[HttpGet]
-		[Route("scryfall")]
-		public async Task<IActionResult> GetScryfallData(string[] cardNames)
-		{
-			var request = new LoadScryfallDataRequest() { CardNames = cardNames };
-			var reply = await _client.GetLocalScryfallData(request, Timeouts.GLOBAL);
+			var request = new LoadCardDataRequest();
+			var reply = await _client.LoadDataFromSpreadsheet(request, Timeouts.GLOBAL);
 			if (!reply.Success) { return StatusCode(500); }
 			return Ok(reply.Response);
 		}

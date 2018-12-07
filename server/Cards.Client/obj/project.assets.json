@@ -4532,11 +4532,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Dev\\TheCardVault\\CardVault\\server\\Cards.Client\\Cards.Client.csproj",
+      "projectUniqueName": "C:\\Dev\\CardVault\\server\\Cards.Client\\Cards.Client.csproj",
       "projectName": "Cards.Client",
-      "projectPath": "C:\\Dev\\TheCardVault\\CardVault\\server\\Cards.Client\\Cards.Client.csproj",
+      "projectPath": "C:\\Dev\\CardVault\\server\\Cards.Client\\Cards.Client.csproj",
       "packagesPath": "C:\\Users\\gellis\\.nuget\\packages\\",
-      "outputPath": "C:\\Dev\\TheCardVault\\CardVault\\server\\Cards.Client\\obj\\",
+      "outputPath": "C:\\Dev\\CardVault\\server\\Cards.Client\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -4555,8 +4555,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Dev\\TheCardVault\\CardVault\\server\\QueueHandler\\QueueHandler.csproj": {
-              "projectPath": "C:\\Dev\\TheCardVault\\CardVault\\server\\QueueHandler\\QueueHandler.csproj"
+            "C:\\Dev\\CardVault\\server\\QueueHandler\\QueueHandler.csproj": {
+              "projectPath": "C:\\Dev\\CardVault\\server\\QueueHandler\\QueueHandler.csproj"
             }
           }
         }

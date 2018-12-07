@@ -5016,6 +5016,19 @@
           "bin/placeholder/Cards.Client.dll": {}
         }
       },
+      "LocalData.Client/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "QueueHandler": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/LocalData.Client.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/LocalData.Client.dll": {}
+        }
+      },
       "QueueHandler/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
@@ -13025,6 +13038,11 @@
       "path": "../Cards.Client/Cards.Client.csproj",
       "msbuildProject": "../Cards.Client/Cards.Client.csproj"
     },
+    "LocalData.Client/1.0.0": {
+      "type": "project",
+      "path": "../LocalData.Client/LocalData.Client.csproj",
+      "msbuildProject": "../LocalData.Client/LocalData.Client.csproj"
+    },
     "QueueHandler/1.0.0": {
       "type": "project",
       "path": "../QueueHandler/QueueHandler.csproj",
@@ -13034,6 +13052,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
       "Cards.Client >= 1.0.0",
+      "LocalData.Client >= 1.0.0",
       "Microsoft.AspNetCore.All >= 2.0.5",
       "Microsoft.NETCore.App >= 2.1.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.0.2",
@@ -13050,11 +13069,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Dev\\TheCardVault\\CardVault\\server\\Gateway\\Gateway.csproj",
+      "projectUniqueName": "C:\\Dev\\CardVault\\server\\Gateway\\Gateway.csproj",
       "projectName": "Gateway",
-      "projectPath": "C:\\Dev\\TheCardVault\\CardVault\\server\\Gateway\\Gateway.csproj",
+      "projectPath": "C:\\Dev\\CardVault\\server\\Gateway\\Gateway.csproj",
       "packagesPath": "C:\\Users\\gellis\\.nuget\\packages\\",
-      "outputPath": "C:\\Dev\\TheCardVault\\CardVault\\server\\Gateway\\obj\\",
+      "outputPath": "C:\\Dev\\CardVault\\server\\Gateway\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -13073,11 +13092,14 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Dev\\TheCardVault\\CardVault\\server\\Cards.Client\\Cards.Client.csproj": {
-              "projectPath": "C:\\Dev\\TheCardVault\\CardVault\\server\\Cards.Client\\Cards.Client.csproj"
+            "C:\\Dev\\CardVault\\server\\Cards.Client\\Cards.Client.csproj": {
+              "projectPath": "C:\\Dev\\CardVault\\server\\Cards.Client\\Cards.Client.csproj"
             },
-            "C:\\Dev\\TheCardVault\\CardVault\\server\\QueueHandler\\QueueHandler.csproj": {
-              "projectPath": "C:\\Dev\\TheCardVault\\CardVault\\server\\QueueHandler\\QueueHandler.csproj"
+            "C:\\Dev\\CardVault\\server\\LocalData.Client\\LocalData.Client.csproj": {
+              "projectPath": "C:\\Dev\\CardVault\\server\\LocalData.Client\\LocalData.Client.csproj"
+            },
+            "C:\\Dev\\CardVault\\server\\QueueHandler\\QueueHandler.csproj": {
+              "projectPath": "C:\\Dev\\CardVault\\server\\QueueHandler\\QueueHandler.csproj"
             }
           }
         }

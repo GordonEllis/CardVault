@@ -13,7 +13,7 @@ namespace Cards.Service
 
             target.Id = source["id"].Value<string>();
             target.Name = source["name"].Value<string>();
-            //target.ImageURIs = source["image_uris"].Value<string[]>();
+            //target.ImageUris = source["image_uris"].Value<string[]>();
             target.ManaCost = source["mana_cost"].Value<string>();
             target.ConvertedManaCost = source["cmc"].Value<int>();
             //target.Type = source["type_line"].Value<string>();

@@ -13,17 +13,17 @@ namespace Cards.Client.Models
         [Column("CardName")]
         public string Name { get; set; }
         [Column("ImageURIs")]
-        public string ImageURIs { get; set; }
+        public string ImageUris { get; set; }
         [Column("ManaCost")]
         public string ManaCost{ get; set; }
         [Column("ConvertedManaCost")]
         public int ConvertedManaCost { get; set; }
-        //[Column("Type")]
-        //public string Type { get; set; }
+        [Column("CardType")]
+        public string Type { get; set; }
         [Column("Text")]
         public string Text { get; set; }
         [Column("Colours")]
-        public string Colours { get; set; }
+        public string ColorIdentity { get; set; }
         [Column("Set")]
         public string Set { get; set; }
         [Column("SetName")]
@@ -32,5 +32,7 @@ namespace Cards.Client.Models
         public string Rarity { get; set; }
         [Column("Value")]
         public decimal? Value { get; set; }
+        [Column("Quantity")]
+        public decimal? Quantity { get; set; }
     }
 }

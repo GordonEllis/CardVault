@@ -11,8 +11,7 @@ export class CardListEffects {
 
   constructor(
     private action$: Actions,
-    //private service: CardListService,
-    private service: CardListMockService
+    private service: CardListService,
   ) { }
 
   @Effect() getItems$ = this.action$.pipe(
@@ -32,5 +31,5 @@ export class CardListEffects {
   //       map(item => new CardListActions.AddCardSuccess(item))
   //     )
   //   )
-  // );
+  // )
 }
