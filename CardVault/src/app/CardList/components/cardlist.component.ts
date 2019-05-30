@@ -9,33 +9,33 @@ import { GetCards } from '@cv/CardList/store/cardlist.actions';
 @Component({
   selector: 'cardlist',
   templateUrl: `cardlist.component.html`,
+  styleUrls: ['./cardlist.component.scss'],
 })
 
 export class CardListComponent implements OnInit {
   dataSource:  MatTableDataSource<CardItem>;
   displayedColumns: string[] = ['CardName', 'Colors', 'ManaCost', 'Own', 'Type', 'CardSet', 'Rarity'];
-  filterOption: string= '';
+  filterOption: string= 'CardName';
   
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(public dialog: MatDialog, private store: Store<AppState>) {
-    this.store.select(s => s.cardItems).subscribe(items => this.setDataSourceData(items.data))
+    this.store.select(s => s.cardItems).subscribe(items => this.setDataSourceData(items.data) )
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-  }
+  ngAfterViewInit() { this.dataSource.sort = this.sort; }
 
   ngOnInit(){
     this.store.dispatch(new GetCards());
   }
 
-  addItem() {
-    this.dialog.open(DialogComponent);
-  }
+  addItem() { this.dialog.open(DialogComponent); }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(filterValue: string) { this.dataSource.filter = filterValue.trim().toLowerCase(); }
+
+  setFilterOption(option: string) { 
+    this.filterOption = option; 
+    this.applyFilter(this.dataSource.filter);
   }
 
   setDataSourceData(items: CardItem[]) {
@@ -49,7 +49,7 @@ export class CardListComponent implements OnInit {
           break;
         }
         case 'Colors': {
-          filterData = data.colors.toString();
+          filterData = data.colorIdentity;
           break;
         }
         case 'ManaCost': {

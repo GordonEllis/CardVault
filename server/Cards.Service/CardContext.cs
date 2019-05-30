@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Cards.Client.Models;
 
 namespace Cards.Service.Context
@@ -7,8 +6,21 @@ namespace Cards.Service.Context
     public class CardContext : DbContext
     {
         public virtual DbSet<Card> Cards { get; set; }
+		public virtual DbSet<ImageUri> ImageUris { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<Card>()
+				.Property(a => a.Id).IsConcurrencyToken();
+
+			modelBuilder.Entity<ImageUri>()
+				.Property(a => a.Id).IsConcurrencyToken();
+
+			modelBuilder.Entity<ImageUri>()
+				.HasKey(a => new { a.Id });
+		}
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //var connectionString = ConfigurationManager.Configuration.GetConnectionString("Hiroku");
             optionsBuilder.EnableSensitiveDataLogging();

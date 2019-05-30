@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
     <PackageReference Include="RabbitMQ.Client" Version="5.1.0" />
-    <PackageReference Include="Npgsql" Version="3.2.6" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.1" />
+    <PackageReference Include="Npgsql" Version="4.0.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.2" />
   </ItemGroup>
   
   
@@ -19,11 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cards.Client\Cards.Client.csproj" />
-<<<<<<< HEAD
-=======
     <ProjectReference Include="..\LocalData.Client\LocalData.Client.csproj" />
->>>>>>> major-updates
     <ProjectReference Include="..\QueueHandler\QueueHandler.csproj" />
   </ItemGroup>
-
 </Project>
