@@ -16,15 +16,12 @@ const initialState: CardListState = {
 
 export function CardListReducer(state = initialState, action: CardListActions.CardActions): CardListState {
   switch (action.type) {
-    
-
     case CardListActions.GetCardsSuccess.TYPE: {
-      console.log(action.items[0])
-        return {
-          ...state,
-          data: action.items
-        };
-      }
+      return {
+        ...state,
+        data: action.items
+      };
+    }
     case CardListActions.AddCardSuccess.TYPE: {
       return {
         ...state,

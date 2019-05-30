@@ -9,6 +9,8 @@ using LocalData.Client.Models;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
+using ImageUri = Cards.Client.Models.ImageUri;
+using Newtonsoft.Json;
 
 namespace Gateway.Controllers
 {
@@ -18,16 +20,19 @@ namespace Gateway.Controllers
     public class CardsController : Controller
     {
         CardsClient _client;
+        LocalDataClient _localdataClient;
 
         public CardsController(QueueingService queueing)
         {
             _client = new CardsClient(queueing.ConnectionFactory);
+            _localdataClient = new LocalDataClient(queueing.ConnectionFactory);
         }
 
         [HttpGet]
         [Route("")]
         public async Task<IActionResult> GetCards(string[] cardIds)
         {
+			//get all cards saved to heroku database (or specific ones)
             var request = new GetCardsRequest() { CardIds = cardIds };
             var reply = await _client.GetCards(request, Timeouts.GLOBAL);
 
@@ -44,6 +49,15 @@ namespace Gateway.Controllers
             return Ok(reply.Response);
         }
 
+        [HttpGet]
+        [Route("localdata")]
+        public async Task<IActionResult> SaveSpreadsheetCards()
+        {
+            var cards = await _localdataClient.LoadDataFromSpreadsheet(new LoadCardDataRequest(), Timeouts.GLOBAL);
+            var request = new SaveCardsRequest() { CardData = Convert(cards.Response.Item1) };
+            var reply = await _client.SaveCards(request, Timeouts.GLOBAL);
+            return Ok(reply.Response);
+        }
 
         private Card[] Convert(CollectionData[] data)
         {
@@ -53,12 +67,12 @@ namespace Gateway.Controllers
             {
                 try
                 {
-                    Card newCard = new Card();
+					Card newCard = new Card();
                     newCard.Id = item.Id;
                     newCard.Name = item.Name;
-                    if (newCard.Name == "Shed Weakness")
-                        newCard.ImageUris = item.ImageUris == null ? "" : item.ImageUris.ToString();
-                    newCard.ManaCost = item.ManaCost;
+					newCard.ImageUris = item.ImageUris.ToObject<ImageUri>();
+					 newCard.ImageUris.Id = item.Id;
+					newCard.ManaCost = item.ManaCost;
                     newCard.ConvertedManaCost = item.Cmc == null ? 0 : (int)item.Cmc;
                     newCard.Type = item.TypeLine;
                     newCard.Text = item.OracleText;
@@ -77,7 +91,7 @@ namespace Gateway.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Console.Out.WriteLine("Something went wrong " + item);
+                    Console.Out.WriteLine(ex + " Something went wrong " + item);
                 }
 
             }

@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace LocalData.Service
 {
@@ -11,22 +10,30 @@ namespace LocalData.Service
         {
             Client.Models.LocalScryfallData target = new Client.Models.LocalScryfallData();
 
-            target.Id = source["id"].Value<string>();
+			target.Id = source["id"].Value<string>();
             target.Name = source["name"].Value<string>();
-			try { target.ImageUris = source["image_uris"].Value<Object>(); } catch { target.ImageUris = null; };
+			try { target.ImageUris = source["image_uris"].Value<JObject>(); } catch { target.ImageUris = null; };
 			try { target.ManaCost = source["mana_cost"].Value<string>(); } catch { target.ManaCost = " "; };
 			try { target.Cmc = source["cmc"].Value<int>(); } catch { target.Cmc = 0; };
 			try { target.TypeLine = source["type_line"].Value<string>(); } catch { target.TypeLine = " "; };
 			try { target.OracleText = source["oracle_text"].Value<string>(); } catch { target.OracleText = " "; };
-			try { target.Colors = source["colors"].Value<Object>(); } catch { target.Colors = null; };
+            try { target.Colors = source["colors"].Value<Object>().ToString(); } catch { target.Colors = " "; };
 			try { target.Set = source["set"].Value<string>(); } catch { target.Set = " "; };
 			try { target.SetName = source["set_name"].Value<string>(); } catch { target.SetName = " "; };
 			try { target.Rarity = source["rarity"].Value<string>(); } catch { target.Rarity = " "; };
 
-			return target;
+            return CleanData(target);
         }
 
-		public static Client.Models.CollectionData MapCollectionData(Client.Models.LocalScryfallData scryfallData, Client.Models.LocalCardData localData)
+        private static Client.Models.LocalScryfallData CleanData(Client.Models.LocalScryfallData data)
+        {
+            data.ManaCost = data.ManaCost.Replace("}{", "").Replace("{","").Replace("}","");
+            data.Colors = new string(data.Colors.Where(c => char.IsLetter(c) || char.IsDigit(c)).ToArray());
+            data.Set = data.Set.ToUpper();
+            return data;
+        }
+
+        public static Client.Models.CollectionData MapCollectionData(Client.Models.LocalScryfallData scryfallData, Client.Models.LocalCardData localData)
 		{
 			Client.Models.CollectionData target = new Client.Models.CollectionData();
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 
 namespace LocalData.Client.Models
 {
@@ -7,13 +8,13 @@ namespace LocalData.Client.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public string Uri { get; set; }
-        public Object ImageUris { get; set; }
+        public JObject ImageUris { get; set; }
         public string ManaCost { get; set; }
         public int? Cmc { get; set; }
         public string TypeLine { get; set; }
         public string OracleText { get; set; }
         public string Loyalty { get; set; }
-        public Object Colors { get; set; }
+        public string Colors { get; set; }
         public string[] ColorIdentity { get; set; }
         public string Set { get; set; }
         public string SetName { get; set; }

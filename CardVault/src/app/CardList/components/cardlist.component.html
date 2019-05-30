@@ -4,7 +4,7 @@
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
 
-    <mat-select placeholder="Filter On" [(ngModel)]="filterOption">
+    <mat-select placeholder="Filter On" (selectionChange)="setFilterOption($event.value)">
       <mat-option *ngFor="let column of displayedColumns" [value]="column">
         {{ column }}
       </mat-option>
@@ -14,6 +14,11 @@
   <!-- <button mat-raised-button (click)="addItem()">Add New Card</button> -->
   
   <mat-table #table [dataSource]="dataSource" matSort>
+      <!-- <ng-container  matColumnDef="CardImage">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+          <mat-cell *matCellDef="let element"> <img [src] = element.imageUris.small /> </mat-cell>
+        </ng-container> -->
+
     <ng-container matColumnDef="CardName">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
@@ -21,7 +26,7 @@
 
     <ng-container matColumnDef="Colors">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Colors </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.colors}} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{element.colorIdentity}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="ManaCost">

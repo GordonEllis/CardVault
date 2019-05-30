@@ -56,7 +56,7 @@ namespace QueueHandler.Queues
                     var result = await handler(sender, receivedArgs);
 
                     // If there's a queue to reply to.
-                    if (!String.IsNullOrEmpty(props.ReplyTo))
+                    if (!string.IsNullOrEmpty(props.ReplyTo))
                     {
                         var response = MessageHandler.Encode(result);
                         Channel.BasicPublish(args.Exchange, props.ReplyTo, replyProps, response);
