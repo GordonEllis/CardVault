@@ -2,20 +2,15 @@ import { Component } from '@angular/core';
 import * as CoreStore from '@cv/core/store';
 import { Store } from '@ngrx/store';
 import { AppState } from '@cv/state';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'card-vault',
   templateUrl: `app.component.html`,
 })
 
-export class AppComponent  { 
-  activePage: string;
+export class AppComponent { 
+  constructor(private router: Router) { }
 
-  constructor(private store: Store<AppState>) {
-    store.select(CoreStore.getActivePage).subscribe(p => this.activePage = p);
-  }
-
-  setActivePage(page: string) {
-    this.store.dispatch(new CoreStore.SetActivePage(page));
-  }
+  setActivePage(page: string) { }
 }

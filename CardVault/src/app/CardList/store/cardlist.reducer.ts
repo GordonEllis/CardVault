@@ -4,13 +4,11 @@ import { CardItem } from '@cv/CardList/models';
 
 export interface CardListState {
   data: CardItem[];
-  hasError: boolean;
   isLoading: boolean;
 }
 
 const initialState: CardListState = {
   data: [],
-  hasError: false,
   isLoading: false
 };
 
@@ -20,13 +18,6 @@ export function CardListReducer(state = initialState, action: CardListActions.Ca
       return {
         ...state,
         data: action.items
-      };
-    }
-    case CardListActions.AddCardSuccess.TYPE: {
-      return {
-        ...state,
-        hasError: false,
-        data: state.data.concat([action.item])
       };
     }
     default: {

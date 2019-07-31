@@ -28,11 +28,11 @@ namespace Gateway.Controllers
             _localdataClient = new LocalDataClient(queueing.ConnectionFactory);
         }
 
-        [HttpGet]
+		//get all cards saved to heroku database (or specific ones)
+		[HttpGet]
         [Route("")]
         public async Task<IActionResult> GetCards(string[] cardIds)
         {
-			//get all cards saved to heroku database (or specific ones)
             var request = new GetCardsRequest() { CardIds = cardIds };
             var reply = await _client.GetCards(request, Timeouts.GLOBAL);
 
@@ -40,15 +40,16 @@ namespace Gateway.Controllers
             return Ok(reply.Response);
         }
 
-        [HttpPost]
-        [Route("")]
-        public async Task<IActionResult> SaveCards(Card[] cards)
-        {
-            var request = new SaveCardsRequest() { CardData = cards };
-            var reply = await _client.SaveCards(request, Timeouts.GLOBAL);
-            return Ok(reply.Response);
-        }
+        //[HttpPost]
+        //[Route("")]
+        //public async Task<IActionResult> SaveCards(Card[] cards)
+        //{
+        //    var request = new SaveCardsRequest() { CardData = cards };
+        //    var reply = await _client.SaveCards(request, Timeouts.GLOBAL);
+        //    return Ok(reply.Response);
+        //}
 
+		//Lookup spreadsheet and save to the heroku database
         [HttpGet]
         [Route("localdata")]
         public async Task<IActionResult> SaveSpreadsheetCards()

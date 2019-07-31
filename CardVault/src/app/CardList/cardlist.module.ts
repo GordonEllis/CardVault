@@ -1,33 +1,34 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CardListComponent, DialogComponent } from '@cv/CardList/components';
-import { CardListEffects, CardListReducer } from '@cv/CardList/store';
-import { SharedModule } from '@cv/shared';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
+import * as Components from '@cv/CardList/components';
+import { CardListService } from '@cv/CardList/service';
+import { CardListEffects, CardListReducer } from '@cv/CardList/store';
+import { SharedModule } from '@cv/shared';
+
+const COMPONENTS = [
+  Components.CardListComponent,
+  Components.DialogComponent,
+];
+
 @NgModule({
-  declarations: [
-    CardListComponent,
-    DialogComponent,
-  ],
-  imports: [
-    BrowserAnimationsModule,
+  declarations: COMPONENTS,
+  exports: COMPONENTS,
+  imports: [    
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule,
     SharedModule,
+    StoreModule.forFeature('List', CardListReducer),
     EffectsModule.forFeature([CardListEffects]),
-    StoreModule.forRoot(CardListReducer)
   ],
-  exports: [
-    CardListComponent,
-    DialogComponent,
-  ],
-  entryComponents: [DialogComponent],
-  providers: [],
-  bootstrap: [CardListComponent]
+  providers: [CardListService],
+  entryComponents: [],
 })
+
 export class CardListModule { }
