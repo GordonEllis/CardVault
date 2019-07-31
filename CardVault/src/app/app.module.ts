@@ -3,33 +3,35 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
-
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppComponent }  from './app.component';
-import { routes } from './app.routes';
 import { SharedModule } from './shared';
 import { EffectsModule } from '@ngrx/effects';
-import { CardListEffects, CardListService, CardListModule, CardListMockService } from '@cv/CardList';
+import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { CardListModule } from '@cv/CardList';
 import { HttpClientModule } from '@angular/common/http';
 import { rootReducer } from './state';
 import { CoreModule } from '@cv/core';
+import { AppRoutingModule } from '@cv/app.routes';
+import { DeckBuilderModule } from '@cv/DeckBuilder';
 
 @NgModule({
   imports: [ 
+    StoreModule.forRoot(rootReducer),
+    StoreRouterConnectingModule.forRoot(),
+    EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument({ maxAge: 50 }),
     BrowserModule,
     CardListModule,
+    DeckBuilderModule,
     CoreModule,
-    EffectsModule.forRoot([CardListEffects]),
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes),
     SharedModule,
-    StoreModule.forRoot(rootReducer),
+    AppRoutingModule,
   ],
-  providers: [ 
-    CardListService,
-    CardListMockService
-  ],
+  providers: [ ],
   declarations: [ AppComponent ],
   bootstrap:    [ AppComponent ]
 })

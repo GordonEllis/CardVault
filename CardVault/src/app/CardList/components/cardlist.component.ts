@@ -1,10 +1,11 @@
+import {SelectionModel} from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatDialog, MatSort } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatSort, MatPaginator } from '@angular/material';
 import { DialogComponent } from './dialog';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AppState } from '@cv/state';
 import { CardItem } from '@cv/CardList/models';
-import { GetCards } from '@cv/CardList/store/cardlist.actions';
+import { GetCards, getCards } from '@cv/CardList/store/';
 
 @Component({
   selector: 'cardlist',
@@ -14,19 +15,24 @@ import { GetCards } from '@cv/CardList/store/cardlist.actions';
 
 export class CardListComponent implements OnInit {
   dataSource:  MatTableDataSource<CardItem>;
-  displayedColumns: string[] = ['CardName', 'Colors', 'ManaCost', 'Own', 'Type', 'CardSet', 'Rarity'];
+  displayedColumns: string[] = ['Select', 'CardName', 'Colors', 'ManaCost', 'Own', 'Type', 'CardSet', 'Rarity'];
   filterOption: string= 'CardName';
+  selectedCards: SelectionModel<CardItem>
   
   @ViewChild(MatSort) sort: MatSort;
-
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  
   constructor(public dialog: MatDialog, private store: Store<AppState>) {
-    this.store.select(s => s.cardItems).subscribe(items => this.setDataSourceData(items.data) )
+    this.store.pipe(select(getCards)).subscribe(cards => this.setDataSourceData(cards));
   }
-
-  ngAfterViewInit() { this.dataSource.sort = this.sort; }
-
+  
   ngOnInit(){
     this.store.dispatch(new GetCards());
+  }
+
+  ngAfterViewInit() { 
+    this.dataSource.sort = this.sort; 
+    this.dataSource.paginator = this.paginator;
   }
 
   addItem() { this.dialog.open(DialogComponent); }
@@ -36,10 +42,13 @@ export class CardListComponent implements OnInit {
   setFilterOption(option: string) { 
     this.filterOption = option; 
     this.applyFilter(this.dataSource.filter);
+    console.log(this.selectedCards.selected);
   }
 
   setDataSourceData(items: CardItem[]) {
+    this.selectedCards = new SelectionModel<CardItem>(true, []);
     this.dataSource = new MatTableDataSource<CardItem>(items);
+    this.dataSource.paginator = this.paginator;
     this.dataSource.filterPredicate = (data: CardItem, filter: string) => {
     let filterData;
 
