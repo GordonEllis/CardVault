@@ -21,7 +21,6 @@ namespace Cards.Client.Models
 		[Column("Border_Crop")]
 		public string Border_Crop { get; set; }
 
-
 		[ForeignKey("Id")]
 		public Card Card { get; set; }
 	}

@@ -39,16 +39,7 @@ namespace Gateway.Controllers
             if (!reply.Success) { return StatusCode(500); }
             return Ok(reply.Response);
         }
-
-        //[HttpPost]
-        //[Route("")]
-        //public async Task<IActionResult> SaveCards(Card[] cards)
-        //{
-        //    var request = new SaveCardsRequest() { CardData = cards };
-        //    var reply = await _client.SaveCards(request, Timeouts.GLOBAL);
-        //    return Ok(reply.Response);
-        //}
-
+		
 		//Lookup spreadsheet and save to the heroku database
         [HttpGet]
         [Route("localdata")]

@@ -1,15 +1,28 @@
 import { Action } from '@ngrx/store';
+import { CardItem } from '@cv/CardList/models';
 import { Deck } from '@cv/DeckBuilder/models';
 
-export class AddDeck implements Action {
-  public static readonly TYPE = '[DeckBuilder] Add Deck';
-  readonly type = AddDeck.TYPE;
+export class SaveDeck implements Action {
+  public static readonly TYPE = '[DeckBuilder] Save Deck';
+  readonly type = SaveDeck.TYPE;
   constructor(public item: Deck) { }
 }
 
-export class AddDeckSuccess implements Action {
-  public static readonly TYPE = '[DeckBuilder] Add Deck Success';
-  readonly type = AddDeckSuccess.TYPE;
+export class SaveDeckSuccess implements Action {
+  public static readonly TYPE = '[DeckBuilder] Save Deck Success';
+  readonly type = SaveDeckSuccess.TYPE;
+  constructor(public success: Boolean) { }
+}
+
+export class CreateDeck implements Action {
+  public static readonly TYPE = '[DeckBuilder] Create Deck';
+  readonly type = CreateDeck.TYPE;
+  constructor(public items: CardItem[]) { }
+}
+
+export class CreateDeckSuccess implements Action {
+  public static readonly TYPE = '[DeckBuilder] Create Deck Success';
+  readonly type = CreateDeckSuccess.TYPE;
   constructor(public success: Boolean) { }
 }
 
@@ -38,8 +51,9 @@ export class DeleteDeckSuccess implements Action {
 }
 
 export type DeckBulderActions =
-    AddDeck |
-    AddDeckSuccess |
+    SaveDeck |
+    SaveDeckSuccess |
+    CreateDeck |
     UpdateDeck |
     UpdateDeckSuccess |
     DeleteDeck |

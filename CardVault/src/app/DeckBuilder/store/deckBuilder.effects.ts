@@ -15,9 +15,11 @@ export class DeckBuilderEffects {
   ) { }
 
   @Effect() addDeck$ = this.action$.pipe(
-    ofType(DeckBuilderActions.AddDeck.TYPE),
-    switchMap((action: DeckBuilderActions.AddDeck) => {
-      return this.service.saveDeck(action.item).pipe(switchMap((items: Boolean) => [new DeckBuilderActions.AddDeckSuccess(items)]));
+    ofType(DeckBuilderActions.SaveDeck.TYPE),
+    switchMap((action: DeckBuilderActions.SaveDeck) => {
+      console.log(action.item);
+      return [];
+      //return this.service.saveDeck(action.item).pipe(switchMap((items: Boolean) => [new DeckBuilderActions.AddDeckSuccess(items)]));
     })
   );
 }

@@ -1,0 +1,22 @@
+<p> {{ deck.id }}</p>
+
+<input #deckName
+autocomplete="off"
+type="text"
+[value]="deck.name"
+[placeholder]="DeckName"
+(blur)="nameChanged($event);" />
+
+<input #deckDescription
+autocomplete="off"
+type="text"
+[value]="deck.description"
+[placeholder]="DeckDescription"
+(blur)="descriptionChanged($event);" />
+
+<button mat-raised-button (click)="addCards()">Add Cards</button>
+<button mat-raised-button (click)="saveDeck()">Save Deck</button>
+
+<cardTable #cardTable
+           [dataSource]="dataSource"></cardTable>
+           

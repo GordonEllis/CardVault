@@ -1,26 +1,24 @@
-﻿using Cards.Client.Models;
-using Cards.Client;
-using System.Threading.Tasks;
+﻿using Cards.Client;
+using Cards.Client.Models;
+using Cards.Service.Context;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using QueueHandler.Queues;
 using RabbitMQ.Client;
-using System.Collections.Generic;
 using System;
-using System.Net.Http;
-using Newtonsoft.Json.Linq;
-using System.Net.Http.Headers;
-using Cards.Service.Context;
+using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
-using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace Cards.Service
 {
     class CardsWorker : QueueReaderService
     {
-        #region - Fields - 
+		#region - Fields - 
 
-        private readonly CardContext _context = new CardContext();
-
+		private readonly CardContext _context = new CardContext();
 
         #endregion
 
@@ -64,7 +62,7 @@ namespace Cards.Service
 			return incomingCards;
 		}
 
-			private static void SaveCardDetails(CardContext context, List<Card> storedCards, List<Card> incomingCards)
+		private static void SaveCardDetails(CardContext context, List<Card> storedCards, List<Card> incomingCards)
         {
 			var itemsToAdd = incomingCards.ToArray().Where(d => !storedCards.Any(c => c.Id == d.Id));
 			var itemsToUpdate = storedCards.Where(d => incomingCards.ToArray().Any(c => c.Id == d.Id));

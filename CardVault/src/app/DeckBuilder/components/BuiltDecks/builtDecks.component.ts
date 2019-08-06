@@ -19,7 +19,7 @@ export class BuiltDecksComponent {
 
   constructor(public dialog: MatDialog, private store: Store<AppState>) {
     //this.store.select(s => s.g).subscribe(items => this.setDataSourceData(items.data) )
-    this.dataSource = new MatTableDataSource<Deck>([{ id: 1, name: 'test', description: ' test', cards: []}]);
+    this.dataSource = new MatTableDataSource<Deck>([{ id: 1, name: 'test', description: ' test', deckCards: []}]);
   }
 
   // ngAfterViewInit() { this.dataSource.sort = this.sort; }

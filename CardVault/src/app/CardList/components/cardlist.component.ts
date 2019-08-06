@@ -1,11 +1,12 @@
-import {SelectionModel} from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatDialog, MatSort, MatPaginator } from '@angular/material';
-import { DialogComponent } from './dialog';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@cv/state';
+import { CardTableComponent } from '@cv/shared/CardTable';
 import { CardItem } from '@cv/CardList/models';
 import { GetCards, getCards } from '@cv/CardList/store/';
+import { Router } from '@angular/router';
+import { getActiveDeck } from '@cv/DeckBuilder';
 
 @Component({
   selector: 'cardlist',
@@ -14,41 +15,33 @@ import { GetCards, getCards } from '@cv/CardList/store/';
 })
 
 export class CardListComponent implements OnInit {
-  dataSource:  MatTableDataSource<CardItem>;
-  displayedColumns: string[] = ['Select', 'CardName', 'Colors', 'ManaCost', 'Own', 'Type', 'CardSet', 'Rarity'];
-  filterOption: string= 'CardName';
-  selectedCards: SelectionModel<CardItem>
+  dataSource: MatTableDataSource<CardItem>;
+  deckCreationActive: boolean = false;
+  filterOption: string = 'CardName';
   
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('cardTable') cardTable: CardTableComponent;
   
-  constructor(public dialog: MatDialog, private store: Store<AppState>) {
+  constructor(public dialog: MatDialog, private store: Store<AppState>, private router: Router) {
     this.store.pipe(select(getCards)).subscribe(cards => this.setDataSourceData(cards));
+    this.store.pipe(select(getActiveDeck)).subscribe(d => this.deckCreationActive = d.deckCards.length > 0);
   }
   
-  ngOnInit(){
-    this.store.dispatch(new GetCards());
-  }
+  ngOnInit(){ this.store.dispatch(new GetCards()); }
 
-  ngAfterViewInit() { 
-    this.dataSource.sort = this.sort; 
-    this.dataSource.paginator = this.paginator;
+  addDeck() { 
+    this.cardTable.addDeck();
+    this.router.navigate(['/newDeck']);
   }
-
-  addItem() { this.dialog.open(DialogComponent); }
 
   applyFilter(filterValue: string) { this.dataSource.filter = filterValue.trim().toLowerCase(); }
 
   setFilterOption(option: string) { 
     this.filterOption = option; 
     this.applyFilter(this.dataSource.filter);
-    console.log(this.selectedCards.selected);
   }
 
   setDataSourceData(items: CardItem[]) {
-    this.selectedCards = new SelectionModel<CardItem>(true, []);
     this.dataSource = new MatTableDataSource<CardItem>(items);
-    this.dataSource.paginator = this.paginator;
     this.dataSource.filterPredicate = (data: CardItem, filter: string) => {
     let filterData;
 
