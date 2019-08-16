@@ -43,15 +43,15 @@ namespace Gateway.Controllers
 			return Ok(reply.Response);
 		}
 
-		//[HttpDelete]
-		//[Route("")]
-		//public async Task<IActionResult> DeleteDeck([FromBody] int[] deckId)
-		//{
-		//	var request = new DeleteDeckRequest() { DeckIds = deckId };
-		//	var reply = await _client.DeleteDeck(request, Timeouts.GLOBAL);
+		[HttpDelete]
+		[Route("")]
+		public async Task<IActionResult> DeleteDeck(int deckId)
+		{
+			var request = new DeleteDeckRequest() { DeckId = deckId };
+			var reply = await _client.DeleteDeck(request, Timeouts.GLOBAL);
 
-		//	if (!reply.Success) { return StatusCode(500); }
-		//	return Ok(reply.Response);
-		//}
+			if (!reply.Success) { return StatusCode(500); }
+			return Ok(reply.Response);
+		}
 	}
 }

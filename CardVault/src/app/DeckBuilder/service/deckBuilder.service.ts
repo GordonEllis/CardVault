@@ -8,11 +8,15 @@ import { Deck } from '@cv/DeckBuilder';
 export class DeckBuilderService {
   public constructor(private http: HttpClient) { }
 
-  saveDeck(deck: Deck): Observable<Boolean> {
-    return this.http.post<Boolean>(environment.apiBase + 'decks', deck);
+  loadDecks(): Observable<Deck[]> {
+    return this.http.get<Deck[]>(environment.apiBase + 'decks');
+  }
+
+  saveDeck(deck: Deck): Observable<Deck> {
+    return this.http.post<Deck>(environment.apiBase + 'decks', deck);
   }
 
   deleteDeck(deckId: number): Observable<Boolean> {
-    return this.http.delete<Boolean>(environment.apiBase + 'decks', { params: { orderId: deckId.toString() }});
+    return this.http.delete<Boolean>(environment.apiBase + 'decks', { params: { deckId: deckId.toString() }});
   }
 }

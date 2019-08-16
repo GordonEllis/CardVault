@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { MaterialModule } from './material.module';
 import { CardTableComponent } from './CardTable';
+import { BrowserModule } from '@angular/platform-browser';
 
 const COMPONENTS = [
   CardTableComponent
 ]
 
 const MODULES = [
+  BrowserModule,
   MaterialModule
 ];
 

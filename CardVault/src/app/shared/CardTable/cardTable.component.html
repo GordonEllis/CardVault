@@ -15,39 +15,12 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="CardName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="Colors">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Colors </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.colorIdentity}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="ManaCost">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Cost </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.manaCost}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="Own">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Own </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.quantity}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="Type">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Type </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.type}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="CardSet">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Set </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.setName}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="Rarity">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Rarity </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.rarity}} </mat-cell>
+    <ng-container *ngFor= "let column of tableDisplayedColumns" matColumnDef= {{column}}>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{column}}  </mat-header-cell>
+      <mat-cell *matCellDef="let element"> 
+        <input #input *ngIf="isEditable(column)" [value]= "element[column]" (blur)="columnEdited(column, input.value,element)"/>
+        <label *ngIf="!isEditable(column)"> {{ element[column] }} </label> 
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

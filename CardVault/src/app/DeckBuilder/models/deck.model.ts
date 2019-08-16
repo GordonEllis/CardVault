@@ -1,14 +1,14 @@
 import { DeckCard } from "./deckCard.model";
 
 export interface Deck {
-  id: number,
+  deckId: number,
   name: string,
   description: string,
   deckCards: DeckCard[]
 }
 
 export const newDeck: Deck = {
-  id: -1,
+  deckId: -1,
   name: 'New Deck',
   description: null,
   deckCards: []

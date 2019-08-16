@@ -1,7 +1,6 @@
 
 import * as DeckBuilderActions from './deckBuilder.actions';
-import { Deck, newDeck } from '@cv/DeckBuilder/models';
-import { fulltoDeck } from '../util/cardInfoConvert';
+import { Deck, DeckCard, newDeck } from '@cv/DeckBuilder/models';
 
 export interface DeckBuilderState {
   data: Deck[];
@@ -17,17 +16,53 @@ const initialState: DeckBuilderState = {
 
 export function DeckBuilderReducer(state = initialState, action: DeckBuilderActions.DeckBulderActions): DeckBuilderState {
   switch (action.type) {
-    case DeckBuilderActions.CreateDeck.TYPE: {
-      let currentActiveDeck = state.activeEditDeck;
-      currentActiveDeck.deckCards = currentActiveDeck.deckCards.length > 1 ? 
-                                fulltoDeck(state.activeEditDeck.id, action.items):
-                                //currentActiveDeck.cards.push(action.items) :
-                                fulltoDeck(state.activeEditDeck.id, action.items);
+    case DeckBuilderActions.CreateDeckSuccess.TYPE: {
+      console.log(action.items);
+      const currentActiveDeck = state.activeEditDeck;
+      currentActiveDeck.deckCards = action.items;
+
       return {
         ...state,
-        activeEditDeck: currentActiveDeck
+        activeEditDeck:  { ...currentActiveDeck }
       };
     }
+    case DeckBuilderActions.DeleteDeckSuccess.TYPE: {
+      const decks = state.data.filter(d => d.deckId !== action.deckId);
+      return {
+        ...state,
+        data: decks
+      };
+    }
+    case DeckBuilderActions.LoadDecksSuccess.TYPE: {
+      return {
+        ...state,
+        data: action.items
+      };
+    }
+    case DeckBuilderActions.SaveDeckSuccess.TYPE: {
+      const decks = state.data.filter(d => d.deckId !== action.item.deckId);
+      decks.push(action.item);
+      return {
+        ...state,
+        data: decks,
+        activeEditDeck: action.item
+      };
+    }
+    case DeckBuilderActions.SetActiveDeck.TYPE: {
+      const deck = state.data.find(d => d.deckId === action.deckId);
+      
+      return {
+        ...state,
+        activeEditDeck: deck
+      };
+    }
+    case DeckBuilderActions.UpdateDeck.TYPE: {
+      return {
+        ...state,
+        activeEditDeck: action.item
+      };
+    }
+
     default: {
       return state;
     }

@@ -1,18 +1,19 @@
 <div>
-    <div class="description-filter">
-        <mat-form-field>
-          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-        </mat-form-field>
+  <div class="description-filter">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
     
-        <mat-select placeholder="Filter On" (selectionChange)="setFilterOption($event.value)">
-          <mat-option *ngFor="let column of displayedColumns" [value]="column">
-            {{ column }}
-          </mat-option>
-        </mat-select>
-      </div>
+    <mat-select placeholder="Filter On" (selectionChange)="setFilterOption($event.value)">
+      <mat-option *ngFor="let column of displayedColumns" [value]="column">
+        {{ column }}
+       </mat-option>
+    </mat-select>
+  </div>
     
-      <button mat-raised-button (click)="addDeck()"> {{ deckCreationActive ? 'Add Cards to Deck' : 'Add New Deck' }}</button>
+  <button mat-raised-button (click)="addDeck()"> {{ deckCreationActive ? 'Add Cards to Deck' : 'Add New Deck' }}</button>
 
   <cardTable #cardTable
-             [dataSource]="dataSource"></cardTable>
+             [dataSource]="dataSource"
+             [tableColumns]="tableColumns"></cardTable>
 </div>

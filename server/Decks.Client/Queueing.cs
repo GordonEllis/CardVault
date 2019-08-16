@@ -9,7 +9,7 @@ namespace Decks.Client
         public static class Queues
         {
 			public static readonly QueueConfiguration SaveDeck = new QueueConfiguration("decks_data_save", false, Exchange);
-			//public static readonly QueueConfiguration DeleteDecks = new QueueConfiguration("decks_data_delete", false, Exchange);
+			public static readonly QueueConfiguration DeleteDecks = new QueueConfiguration("decks_data_delete", false, Exchange);
 			public static readonly QueueConfiguration GetDecks = new QueueConfiguration("decks_data_get", false, Exchange);
         }
     }

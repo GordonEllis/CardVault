@@ -15,7 +15,6 @@ namespace Decks.Client.Models
 		[Column("DeckDescription")]
 		public string Description { get; set; }
 
-
 		public List<DeckCard> DeckCards { get; set; }
 	}
 }

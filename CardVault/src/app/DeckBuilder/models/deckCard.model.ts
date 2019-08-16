@@ -1,5 +1,5 @@
 export interface DeckCard {
-  DeckId: number,
-  CardId: string,
-  Quantity: number
+  deckId: number,
+  cardId: string,
+  quantity: number
 }

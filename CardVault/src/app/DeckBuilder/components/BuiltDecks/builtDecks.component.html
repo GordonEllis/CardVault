@@ -12,17 +12,20 @@
 
     <ng-container matColumnDef="ViewDeck">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let element"> <button mat-button>View Deck</button> </mat-cell>
+      <mat-cell *matCellDef="let element"> <button (click)="viewDeck(element.deckId)"
+                                                   mat-button>View Deck</button> </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="AddCards">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let element"> <button mat-button>Add Cards</button> </mat-cell>
+      <mat-cell *matCellDef="let element"> <button (click)="addCards(element.deckId)"
+                                                    mat-button>Add Cards</button> </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="RemoveDeck">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let element"> <button mat-button>Delete Deck</button> </mat-cell>
+      <mat-cell *matCellDef="let element"> <button (click)="deleteDeck(element.deckId)"
+                                                   mat-button>Delete Deck</button> </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="Export">

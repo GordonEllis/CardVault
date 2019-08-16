@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatDialog, MatSort } from '@angular/material';
-import { Store } from '@ngrx/store';
-import { AppState } from '@cv/state';
+import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { AppState } from '@cv/store';
 import { Deck } from '@cv/DeckBuilder/models'
+import { DeleteDeck, getDecks } from '@cv/DeckBuilder/store'
+
 
 @Component({
   selector: 'builtDecks',
@@ -13,23 +16,22 @@ import { Deck } from '@cv/DeckBuilder/models'
 export class BuiltDecksComponent {
   dataSource:  MatTableDataSource<Deck>;
   displayedColumns: string[] = ['DeckName', 'DeckDescription', 'ViewDeck', 'AddCards', 'RemoveDeck', 'Export'];
-  filterOption: string= 'DeckName';
   
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public dialog: MatDialog, private store: Store<AppState>) {
-    //this.store.select(s => s.g).subscribe(items => this.setDataSourceData(items.data) )
-    this.dataSource = new MatTableDataSource<Deck>([{ id: 1, name: 'test', description: ' test', deckCards: []}]);
+  constructor(public dialog: MatDialog, private store: Store<AppState>, private router: Router,) {
+    this.store.pipe(select(getDecks)).subscribe(decks => this.dataSource = new MatTableDataSource<Deck>(decks));
   }
 
-  // ngAfterViewInit() { this.dataSource.sort = this.sort; }
-  // addItem() { this.dialog.open(DialogComponent); }
+  ngOnInit() { }
 
-  // applyFilter(filterValue: string) { this.dataSource.filter = 'DeckName';  }
+  viewDeck(deckId: number) {
+    this.router.navigate(['/newDeck', { deckId: deckId }]);
+  }
 
-  setDataSourceData(decks: Deck[]) {
+  deleteDeck(deckId: number) { this.store.dispatch(new DeleteDeck(deckId)) }
+
+  addCards(deckId: number) {
     
-    this.dataSource.filterPredicate = (data: Deck, filter: string) => {
-    return data.name.toLowerCase().indexOf(filter) != -1};
   }
 }

@@ -1,6 +1,7 @@
 ﻿using Decks.Client;
 using Decks.Client.Models;
 using Decks.Service.Context;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using QueueHandler.Queues;
 using RabbitMQ.Client;
@@ -23,7 +24,7 @@ namespace Decks.Service
 		
         public DecksWorker(ConnectionFactory factory) : base(factory)
         {
-			//ReadAndReply<DeleteDeckRequest, Boolean>(Queueing.Queues.DeleteDecks, true, DeleteDeck);
+			ReadAndReply<DeleteDeckRequest, Boolean>(Queueing.Queues.DeleteDecks, true, DeleteDeck);
 			ReadAndReply<SaveDeckRequest, Deck>(Queueing.Queues.SaveDeck, true, SaveDeck);
 			ReadAndReply<GetDecksRequest, Deck[]>(Queueing.Queues.GetDecks, true, GetDecks);
 			
@@ -34,6 +35,8 @@ namespace Decks.Service
 		#region -  Event Handlers  -
 		private Task<Boolean> DeleteDeck(object sender, ReceiveEventArgs<DeleteDeckRequest> e)
 		{
+			_context.Remove(_context.Decks.Include(d => d.DeckCards).First(d => d.DeckId == e.Message.DeckId));
+			_context.SaveChanges();
 			e.Acknowledge = true;
 			return Task.FromResult(true);
 		}
@@ -56,7 +59,7 @@ namespace Decks.Service
 		{
 			var savedDetails = updatedDeck;
 
-			if (updatedDeck.DeckId == 0)
+			if (updatedDeck.DeckId == -1)
 			#region Insert new deck
 			{
 				var newDeck = JsonConvert.DeserializeObject<Deck>(JsonConvert.SerializeObject(savedDetails));
@@ -84,19 +87,22 @@ namespace Decks.Service
 		{
 			updated.ForEach(c => c.DeckId = deckId);
 
-			var itemsToAdd = updated.Where(d => !existing.Any(c => c.DeckId == d.DeckId));
-			var itemsToUpdate = existing.Where(d => updated.Any(c => c.DeckId == d.DeckId));
-			var itemsToRemove = existing.Where(d => !updated.Any(c => c.DeckId == d.DeckId));
+			var itemsToAdd = updated.Where(d => !existing.Any(c => c.DeckId == d.DeckId && c.CardId == d.CardId));
+			var itemsToUpdate = existing.Where(d => updated.Any(c => c.DeckId == d.DeckId && c.CardId == d.CardId));
+			var itemsToRemove = existing.Where(d => !updated.Any(c => c.DeckId == d.DeckId && c.CardId == d.CardId));
 
 			foreach (var update in itemsToUpdate)
-				context.Entry(update).CurrentValues.SetValues(updated.Where(d => d.DeckId == update.DeckId).SingleOrDefault());
+				context.Entry(update).CurrentValues
+					.SetValues(updated.Where(d => d.DeckId == update.DeckId && d.CardId == update.CardId).SingleOrDefault());
 			context.DeckCard.RemoveRange(itemsToRemove);
 			context.DeckCard.AddRange(itemsToAdd);
 		}
 
 		private async Task<Deck[]> GetDecks(object sender, ReceiveEventArgs<GetDecksRequest> e)
         {
-			return await Task.FromResult(_context.Decks.ToArray());
+			return await Task.FromResult(_context.Decks
+										.Include(d => d.DeckCards)										
+										.ToArray());
         }
     }
     #endregion

@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { select, Store } from '@ngrx/store';
-import { AppState } from '@cv/state';
-import { CardTableComponent } from '@cv/shared/CardTable';
+import { AppState } from '@cv/store';
+import { CardTableComponent, CardListColumns, DisplayColumns } from '@cv/shared/CardTable';
 import { CardItem } from '@cv/CardList/models';
-import { GetCards, getCards } from '@cv/CardList/store/';
+import { GetCards, getCards } from '@cv/CardList/store';
 import { Router } from '@angular/router';
 import { getActiveDeck } from '@cv/DeckBuilder';
 
@@ -18,15 +18,19 @@ export class CardListComponent implements OnInit {
   dataSource: MatTableDataSource<CardItem>;
   deckCreationActive: boolean = false;
   filterOption: string = 'CardName';
+  tableColumns: DisplayColumns[];
   
   @ViewChild('cardTable') cardTable: CardTableComponent;
   
   constructor(public dialog: MatDialog, private store: Store<AppState>, private router: Router) {
+    
+  }
+  
+  ngOnInit(){ 
+    this.tableColumns = CardListColumns;
     this.store.pipe(select(getCards)).subscribe(cards => this.setDataSourceData(cards));
     this.store.pipe(select(getActiveDeck)).subscribe(d => this.deckCreationActive = d.deckCards.length > 0);
   }
-  
-  ngOnInit(){ this.store.dispatch(new GetCards()); }
 
   addDeck() { 
     this.cardTable.addDeck();

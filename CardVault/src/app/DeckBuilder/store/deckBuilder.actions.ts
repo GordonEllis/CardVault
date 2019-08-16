@@ -1,17 +1,23 @@
 import { Action } from '@ngrx/store';
 import { CardItem } from '@cv/CardList/models';
-import { Deck } from '@cv/DeckBuilder/models';
+import { Deck, DeckCard } from '@cv/DeckBuilder/models';
+
+
+export class SetActiveDeck implements Action {
+  public static readonly TYPE = '[DeckBuilder] Set Active Deck';
+  readonly type = SetActiveDeck.TYPE;
+  constructor(public deckId: number) { }
+}
 
 export class SaveDeck implements Action {
   public static readonly TYPE = '[DeckBuilder] Save Deck';
   readonly type = SaveDeck.TYPE;
-  constructor(public item: Deck) { }
 }
 
 export class SaveDeckSuccess implements Action {
   public static readonly TYPE = '[DeckBuilder] Save Deck Success';
   readonly type = SaveDeckSuccess.TYPE;
-  constructor(public success: Boolean) { }
+  constructor(public item: Deck) { }
 }
 
 export class CreateDeck implements Action {
@@ -23,7 +29,18 @@ export class CreateDeck implements Action {
 export class CreateDeckSuccess implements Action {
   public static readonly TYPE = '[DeckBuilder] Create Deck Success';
   readonly type = CreateDeckSuccess.TYPE;
-  constructor(public success: Boolean) { }
+  constructor(public items: DeckCard[]) { }
+}
+
+export class LoadDecks implements Action {
+  public static readonly TYPE = '[DeckBuilder] Load Decks';
+  readonly type = LoadDecks.TYPE;
+}
+
+export class LoadDecksSuccess implements Action {
+  public static readonly TYPE = '[DeckBuilder] Load Decks Success';
+  readonly type = LoadDecksSuccess.TYPE;
+  constructor(public items: Deck[]) { }
 }
 
 export class UpdateDeck implements Action {
@@ -47,14 +64,18 @@ export class DeleteDeck implements Action {
 export class DeleteDeckSuccess implements Action {
   public static readonly TYPE = '[DeckBuilder] Delete Deck Success';
   readonly type = DeleteDeckSuccess.TYPE;
-  constructor(public success: Boolean) { }
+  constructor(public deckId: number, public success: Boolean) { }
 }
 
 export type DeckBulderActions =
+    SetActiveDeck |
+    CreateDeck |
+    CreateDeckSuccess |
     SaveDeck |
     SaveDeckSuccess |
-    CreateDeck |
     UpdateDeck |
     UpdateDeckSuccess |
     DeleteDeck |
-    DeleteDeckSuccess;
+    DeleteDeckSuccess |
+    LoadDecks |
+    LoadDecksSuccess;

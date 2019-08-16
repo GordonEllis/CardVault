@@ -2,6 +2,6 @@
 {
     public class DeleteDeckRequest
 	{
-        public int[] DeckIds { get; set; }
+        public int DeckId { get; set; }
     }
 }

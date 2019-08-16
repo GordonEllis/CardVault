@@ -4,6 +4,7 @@ using RabbitMQ.Client;
 using System.Threading;
 using System.Threading.Tasks;
 using Decks.Client.Models;
+using System;
 
 namespace Decks.Client
 {
@@ -11,10 +12,10 @@ namespace Decks.Client
     {
         public DecksClient(ConnectionFactory factory) : base(factory, Queueing.Exchange) { }
 
-		//public Task<MessageResponse<Boolean>> DeleteDeck(DeleteDeckRequest request, int millisecondsTimeout = -1, CancellationToken cancellationToken = default(CancellationToken))
-		//{
-		//	return WriteAndReply<DeleteDeckRequest, Boolean>(Queueing.Queues.DeleteDecks, request, null, millisecondsTimeout, cancellationToken);
-		//}
+		public Task<MessageResponse<Boolean>> DeleteDeck(DeleteDeckRequest request, int millisecondsTimeout = -1, CancellationToken cancellationToken = default(CancellationToken))
+		{
+			return WriteAndReply<DeleteDeckRequest, Boolean>(Queueing.Queues.DeleteDecks, request, null, millisecondsTimeout, cancellationToken);
+		}
 
 		public Task<MessageResponse<Deck[]>> GetDecks(GetDecksRequest request, int millisecondsTimeout = -1, CancellationToken cancellationToken = default(CancellationToken))
         {
