@@ -1,0 +1,65 @@
+$width: 100%;
+
+@mixin default-styles($percent) {
+  display: inline-flex;
+  @include set-width($percent)
+}
+
+@mixin set-width($percent) {
+  width: $percent;
+}
+
+button {
+  line-height: initial;
+  white-space: normal;
+  width: 100px;
+}
+
+.grid-container {
+  @include default-styles(100%);
+
+  .grid-row {
+    @include set-width(100%);
+
+    > label {
+      font-weight: bold;
+      line-height: 2.5;
+    }
+
+    > input {
+      border: none;
+      max-width: 100%;
+      min-width: 550px;
+      text-overflow: ellipsis;
+      width: auto;
+      white-space: nowrap;
+    }
+  }
+
+  > .grid-column {
+    &.description {
+      @include set-width(65%);
+    }
+
+    &.small {
+      @include set-width(15%); 
+    }
+
+    &.buttons {
+      @include set-width(20%); 
+      display: flex;  
+      justify-content: flex-end;
+    }
+    
+    margin: 0 0 0 1rem;
+    display: inline-block;
+  }
+
+  > div {
+    @include default-styles(100%);
+  }
+}
+
+.description-filter {
+  display: inline-flex;
+}

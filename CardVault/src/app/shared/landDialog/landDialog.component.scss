@@ -1,0 +1,21 @@
+.mat-dialog-content {
+  display: inline-grid;
+}
+
+.increment {
+  display: inline-flex;
+
+  input {
+    width: 50px;
+  }
+   
+  button.mat-button {
+    min-width: 0;
+    padding: 0 0 0 0;
+  }
+}
+
+img {
+  width: 36px;
+  height: 36px;
+}

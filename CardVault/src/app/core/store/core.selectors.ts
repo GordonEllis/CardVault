@@ -10,8 +10,3 @@ export const getShowSideMenu = createSelector(
   getCoreState,
   (state: CoreState) => state.showSideMenu
 )
-
-export const getActivePage = createSelector(
-  getCoreState,
-  (state: CoreState) => state.activePage
-)

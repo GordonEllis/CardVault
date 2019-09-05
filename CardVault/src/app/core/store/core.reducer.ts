@@ -1,12 +1,10 @@
 import * as Actions from './core.actions';
 
 export interface CoreState {
-  activePage: string
   showSideMenu: boolean;
 }
 
 export const initialState: CoreState = {
-  activePage: 'list',
   showSideMenu: false,
 };
 
@@ -22,12 +20,6 @@ export function coreReducer(state = initialState, action: Actions.CoreActions): 
       return {
         ...state,
         showSideMenu: true
-      };
-    }
-    case Actions.SetActivePage.TYPE: {
-      return {
-        ...state,
-        activePage: action.data
       };
     }
     default: {

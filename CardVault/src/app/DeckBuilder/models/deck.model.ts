@@ -1,8 +1,15 @@
-import { CardItem } from "@cv/CardList";
+import { DeckCard } from "./deckCard.model";
 
 export interface Deck {
-  id: number,
+  deckId: number,
   name: string,
   description: string,
-  cards: CardItem[]
+  deckCards: DeckCard[]
+}
+
+export const newDeck: Deck = {
+  deckId: -1,
+  name: 'New Deck',
+  description: null,
+  deckCards: []
 }

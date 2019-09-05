@@ -1,15 +1,29 @@
 import { NgModule } from '@angular/core';
 import { MaterialModule } from './material.module';
+import { CardTableComponent } from './CardTable';
+import { FilterDialogComponent } from './filterDialog';
+import { LandDialogComponent } from './landDialog';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
-const modules = [
-  MaterialModule
+const COMPONENTS = [
+  CardTableComponent,
+  FilterDialogComponent,
+  LandDialogComponent,
+]
+
+const MODULES = [
+  BrowserModule,
+  FormsModule,
+  MaterialModule,
+  ReactiveFormsModule
 ];
 
 @NgModule({
-  declarations: [],
-  imports: modules,
-  exports: modules,
+  declarations: [COMPONENTS],
+  imports: [MODULES],
+  exports: [MODULES, COMPONENTS],
   providers: [],
-  bootstrap: []
+  bootstrap: [COMPONENTS]
 })
 export class SharedModule { }

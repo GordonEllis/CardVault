@@ -4,18 +4,19 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@cv/shared';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
-import { DeckBuilderComponent, BuiltDecksComponent } from '@cv/DeckBuilder/components';
+import { DeckBuilderComponent, BuiltDecksComponent, CreateDeckComponent } from '@cv/DeckBuilder/components';
 import { DeckBuilderEffects, DeckBuilderReducer } from '@cv/DeckBuilder/store';
 import { DeckBuilderService } from '@cv/DeckBuilder/service';
 
 const COMPONENTS = [
+  CreateDeckComponent,
   DeckBuilderComponent,
   BuiltDecksComponent,
 ]
 
 @NgModule({
-  declarations: [COMPONENTS],
+  declarations: COMPONENTS,
+  exports: COMPONENTS,
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
@@ -23,11 +24,8 @@ const COMPONENTS = [
     ReactiveFormsModule,
     SharedModule,
     EffectsModule.forFeature([DeckBuilderEffects]),
-    StoreModule.forRoot(DeckBuilderReducer)
   ],
-  exports: [DeckBuilderComponent],
-  entryComponents: [],
   providers: [DeckBuilderService],
-  bootstrap: [DeckBuilderComponent]
+  entryComponents: [],
 })
 export class DeckBuilderModule { }

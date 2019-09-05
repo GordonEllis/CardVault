@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '@cv/state';
+import { AppState } from '@cv/store';
 
 @Component({
   selector: 'deckBuilder',

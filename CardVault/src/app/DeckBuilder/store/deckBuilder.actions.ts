@@ -1,16 +1,52 @@
 import { Action } from '@ngrx/store';
-import { Deck } from '@cv/DeckBuilder/models';
+import { CardItem } from '@cv/CardList/models';
+import { Deck, DeckCard } from '@cv/DeckBuilder/models';
 
-export class AddDeck implements Action {
-  public static readonly TYPE = '[DeckBuilder] Add Deck';
-  readonly type = AddDeck.TYPE;
+
+export class SetActiveDeck implements Action {
+  public static readonly TYPE = '[DeckBuilder] Set Active Deck';
+  readonly type = SetActiveDeck.TYPE;
+  constructor(public deckId: number) { }
+}
+
+export class SaveDeck implements Action {
+  public static readonly TYPE = '[DeckBuilder] Save Deck';
+  readonly type = SaveDeck.TYPE;
+}
+
+export class SaveDeckSuccess implements Action {
+  public static readonly TYPE = '[DeckBuilder] Save Deck Success';
+  readonly type = SaveDeckSuccess.TYPE;
   constructor(public item: Deck) { }
 }
 
-export class AddDeckSuccess implements Action {
-  public static readonly TYPE = '[DeckBuilder] Add Deck Success';
-  readonly type = AddDeckSuccess.TYPE;
-  constructor(public success: Boolean) { }
+export class AddCardsToActiveDeck implements Action {
+  public static readonly TYPE = '[DeckBuilder] Add Cards To Active Deck';
+  readonly type = AddCardsToActiveDeck.TYPE;
+  constructor(public items: CardItem[]) { }
+}
+
+export class RemoveCardsFromActiveDeck implements Action {
+  public static readonly TYPE = '[DeckBuilder] Remove Cards From Active Deck';
+  readonly type = RemoveCardsFromActiveDeck.TYPE;
+  constructor(public items: CardItem[]) { }
+}
+
+export class CreateDeckSuccess implements Action {
+  public static readonly TYPE = '[DeckBuilder] Create Deck Success';
+  readonly type = CreateDeckSuccess.TYPE;
+  constructor(public items: DeckCard[]) { }
+}
+
+export class LoadDecks implements Action {
+  public static readonly TYPE = '[DeckBuilder] Load Decks';
+  readonly type = LoadDecks.TYPE;
+}
+
+export class LoadDecksSuccess implements Action {
+  public static readonly TYPE = '[DeckBuilder] Load Decks Success';
+  readonly type = LoadDecksSuccess.TYPE;
+  constructor(public items: Deck[]) { }
 }
 
 export class UpdateDeck implements Action {
@@ -34,13 +70,18 @@ export class DeleteDeck implements Action {
 export class DeleteDeckSuccess implements Action {
   public static readonly TYPE = '[DeckBuilder] Delete Deck Success';
   readonly type = DeleteDeckSuccess.TYPE;
-  constructor(public success: Boolean) { }
+  constructor(public deckId: number, public success: Boolean) { }
 }
 
 export type DeckBulderActions =
-    AddDeck |
-    AddDeckSuccess |
+    SetActiveDeck |
+    AddCardsToActiveDeck |
+    RemoveCardsFromActiveDeck |
+    SaveDeck |
+    SaveDeckSuccess |
     UpdateDeck |
     UpdateDeckSuccess |
     DeleteDeck |
-    DeleteDeckSuccess;
+    DeleteDeckSuccess |
+    LoadDecks |
+    LoadDecksSuccess;

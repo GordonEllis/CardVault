@@ -1,0 +1,40 @@
+<div>
+  <mat-table #table [dataSource]="dataSource" matSort>
+    <ng-container  matColumnDef="CardImage">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+      <mat-cell *matCellDef="let element"> <img [src] = element.imageUris.small /> </mat-cell>
+    </ng-container>
+        
+    <ng-container matColumnDef="Select">
+      <th class ="selectBox" mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? selectAll() : null"
+                      [checked]="selectedCards.hasValue() && isAllSelected()"></mat-checkbox>
+                      <span>Select All</span>
+      </th>
+      <td class ="selectBox" mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selectedCards.toggle(row) : null"
+                      [checked]="selectedCards.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container *ngFor= "let column of tableDisplayedColumns" matColumnDef= {{column.columnDef}}>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{column.headerText}}  </mat-header-cell>
+      <mat-cell class="dataCell" *matCellDef="let element"> 
+        <input #input *ngIf="isEditable(column.columnDef)" 
+                      [value]= "element[column.columnDef]" 
+                      (blur)="columnEdited(column.columnDef, input.value,element)"/>
+        <label *ngIf="!isEditable(column.columnDef)"> {{ element[column.columnDef] }} </label> 
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [length]="dataSource.length"  
+                 [pageSize]="10" 
+                 [pageSizeOptions]="[10, 20, 50]" 
+                 showFirstLastButtons></mat-paginator>
+</div>

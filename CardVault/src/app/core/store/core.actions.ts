@@ -10,13 +10,6 @@ export class CloseSideMenu implements Action {
   readonly type = CloseSideMenu.TYPE;
 }
 
-export class SetActivePage implements Action {
-  public static readonly TYPE = '[Core] Set Active Page';
-  readonly type = SetActivePage.TYPE;
-  constructor(public data: string){};
-}
-
 export type CoreActions =
   CloseSideMenu |
-  OpenSideMenu |
-  SetActivePage;
+  OpenSideMenu;

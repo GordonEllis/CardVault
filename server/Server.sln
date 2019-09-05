@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gateway", "Gateway\Gateway.csproj", "{D26B346B-DD30-4BDF-96CD-8B4C1F91012F}"
 EndProject
@@ -11,9 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cards.Client", "Cards.Clien
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cards.Service", "Cards.Service\Cards.Service.csproj", "{2DA1C052-8651-4450-9BE0-6769D4DC9984}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalData.Client", "LocalData.Client\LocalData.Client.csproj", "{066631D5-DE2A-4239-8278-2C8FD0E09117}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalData.Client", "LocalData.Client\LocalData.Client.csproj", "{066631D5-DE2A-4239-8278-2C8FD0E09117}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalData.Service", "LocalData.Service\LocalData.Service.csproj", "{52C3BF47-C0F9-4C7A-9E18-71EF266D3EF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalData.Service", "LocalData.Service\LocalData.Service.csproj", "{52C3BF47-C0F9-4C7A-9E18-71EF266D3EF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Decks.Client", "Decks.Client\Decks.Client.csproj", "{1A7FBFE5-21FA-410A-BB36-53B9A0CBBFE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Decks.Service", "Decks.Service\Decks.Service.csproj", "{EB341D0E-2855-4A6F-81E5-10A662FC9719}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +62,18 @@ Global
 		{52C3BF47-C0F9-4C7A-9E18-71EF266D3EF3}.multiple|Any CPU.Build.0 = Debug|Any CPU
 		{52C3BF47-C0F9-4C7A-9E18-71EF266D3EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52C3BF47-C0F9-4C7A-9E18-71EF266D3EF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A7FBFE5-21FA-410A-BB36-53B9A0CBBFE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A7FBFE5-21FA-410A-BB36-53B9A0CBBFE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A7FBFE5-21FA-410A-BB36-53B9A0CBBFE7}.multiple|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A7FBFE5-21FA-410A-BB36-53B9A0CBBFE7}.multiple|Any CPU.Build.0 = Debug|Any CPU
+		{1A7FBFE5-21FA-410A-BB36-53B9A0CBBFE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A7FBFE5-21FA-410A-BB36-53B9A0CBBFE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB341D0E-2855-4A6F-81E5-10A662FC9719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB341D0E-2855-4A6F-81E5-10A662FC9719}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB341D0E-2855-4A6F-81E5-10A662FC9719}.multiple|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB341D0E-2855-4A6F-81E5-10A662FC9719}.multiple|Any CPU.Build.0 = Debug|Any CPU
+		{EB341D0E-2855-4A6F-81E5-10A662FC9719}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB341D0E-2855-4A6F-81E5-10A662FC9719}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

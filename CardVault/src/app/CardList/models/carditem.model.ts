@@ -9,7 +9,7 @@ export interface CardItem {
      manaCost: string,
      cmc: number,
      type: string,
-     oracleText: string,
+     text: string,
      loyalty: string,
      colors: string,
      colorIdentity: string[],
