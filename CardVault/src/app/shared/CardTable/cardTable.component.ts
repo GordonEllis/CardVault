@@ -6,7 +6,7 @@ import { AppState } from '@cv/store';
 import { CardItem } from '@cv/CardList/models';
 import { ColumnUpdated, DisplayColumns } from './Models'
 import { GetCards, getCards } from '@cv/CardList/store/';
-import { CreateDeck, UpdateDeck } from '@cv/DeckBuilder/store';
+import { AddCardsToActiveDeck, RemoveCardsFromActiveDeck } from '@cv/DeckBuilder/store';
 
 @Component({
   selector: 'cardTable',
@@ -24,14 +24,15 @@ export class CardTableComponent implements OnChanges {
   
   selectedCards: SelectionModel<CardItem>;
   displayedColumns: string[] = ['Select', 'CardImage'];
-  tableDisplayedColumns: string[];
+  tableDisplayedColumns: DisplayColumns[];
   
   constructor(private store: Store<AppState>) { }
   
   ngOnInit() {
     this.selectedCards = new SelectionModel<CardItem>(true, []);
-    this.tableDisplayedColumns = this.tableColumns.map(c => c.columnDef);
-    this.displayedColumns = [...this.displayedColumns, ...this.tableDisplayedColumns];
+    this.tableDisplayedColumns = this.tableColumns; 
+    const columns = this.tableColumns.map(c => c.columnDef);
+    this.displayedColumns = [...this.displayedColumns, ...columns];
   }
 
   ngOnChanges(){ 
@@ -48,5 +49,18 @@ export class CardTableComponent implements OnChanges {
     }
   }
 
-  addDeck() { this.store.dispatch(new CreateDeck(this.selectedCards.selected)) }
+  isAllSelected() {
+    const numSelected = this.selectedCards.selected.length;
+    const numRows = this.dataSource.filteredData.length;
+    return numSelected === numRows;
+  }
+
+  selectAll() { 
+      this.isAllSelected() ?
+          this.selectedCards.clear() :
+          this.dataSource.filteredData.forEach(row => this.selectedCards.select(row));
+  }
+
+  addCardsToDeck() { this.store.dispatch(new AddCardsToActiveDeck(this.selectedCards.selected)) }
+  removeCardsFromDeck() { this.store.dispatch(new RemoveCardsFromActiveDeck(this.selectedCards.selected)) }
 }

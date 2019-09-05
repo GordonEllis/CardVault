@@ -19,18 +19,7 @@ export class DeckBuilderEffects {
   ) { }
 
 
-  @Effect() createDeck$ = this.action$.pipe(
-    ofType(DeckBuilderActions.CreateDeck.TYPE),
-    switchMap((action: DeckBuilderActions.CreateDeck) => {
-            //const filteredItems = action.items.filter(d => !currentActiveDeck.deckCards.find(a => a.cardId === d.id));
-            console.log(action.items);
-      const deckCards: DeckCard[] = action.items.map(i => ({ deckId: -1, cardId: i.id, quantity: 0 }));
-      return [new DeckBuilderActions.CreateDeckSuccess(deckCards)];
-      //return this.service.saveDeck(deck).pipe(map((item: Deck) => new DeckBuilderActions.SaveDeckSuccess(item)));
-    })
-  );
-
-  @Effect() addDeck$ = this.action$.pipe(
+  @Effect() saveDeck$ = this.action$.pipe(
     ofType(DeckBuilderActions.SaveDeck.TYPE),
     withLatestFrom(this.store$.pipe(select(DeckBuilderSelectors.getActiveDeck))),
     switchMap(([action, deck]: [DeckBuilderActions.SaveDeck, Deck]) => {

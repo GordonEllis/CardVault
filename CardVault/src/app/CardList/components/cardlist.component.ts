@@ -3,6 +3,7 @@ import { MatTableDataSource, MatDialog } from '@angular/material';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@cv/store';
 import { CardTableComponent, CardListColumns, DisplayColumns } from '@cv/shared/CardTable';
+import { FilterDialogComponent, FilterDialogConfig } from '@cv/shared/filterDialog';
 import { CardItem } from '@cv/CardList/models';
 import { GetCards, getCards } from '@cv/CardList/store';
 import { Router } from '@angular/router';
@@ -22,9 +23,7 @@ export class CardListComponent implements OnInit {
   
   @ViewChild('cardTable') cardTable: CardTableComponent;
   
-  constructor(public dialog: MatDialog, private store: Store<AppState>, private router: Router) {
-    
-  }
+  constructor(private store: Store<AppState>, private router: Router, protected dialog: MatDialog) { }
   
   ngOnInit(){ 
     this.tableColumns = CardListColumns;
@@ -32,17 +31,36 @@ export class CardListComponent implements OnInit {
     this.store.pipe(select(getActiveDeck)).subscribe(d => this.deckCreationActive = d.deckCards.length > 0);
   }
 
-  addDeck() { 
-    this.cardTable.addDeck();
+  addCardsToDeck() { 
+    this.cardTable.addCardsToDeck();
     this.router.navigate(['/newDeck']);
   }
 
-  applyFilter(filterValue: string) { this.dataSource.filter = filterValue.trim().toLowerCase(); }
+  toggleFilter() {
+    const data: FilterDialogConfig = {
+      title: `Add Filters`,
+      items: this.tableColumns.map(c => c.headerText)
+    };
 
-  setFilterOption(option: string) { 
-    this.filterOption = option; 
-    this.applyFilter(this.dataSource.filter);
+    const dialogRef = this.dialog.open(FilterDialogComponent);
+    dialogRef.afterClosed().subscribe((r: any) => {
+      this.applyFilter(r);
+    });
   }
+
+  applyFilter(filterValue: any) {
+    //let filter: CardItem
+//    JSON.stringify(filter)
+    
+    filterValue.colors = '';
+    filterValue.rarity = '';
+    console.log(filterValue);
+    console.log(this.dataSource);
+    //this.dataSource.filter = filterValue.trim().toLowerCase(); 
+    this.dataSource.filter = JSON.stringify(filterValue);
+  }
+  
+  setFilterOption(option: string) { this.applyFilter(this.dataSource.filter) }
 
   setDataSourceData(items: CardItem[]) {
     this.dataSource = new MatTableDataSource<CardItem>(items);
@@ -76,6 +94,10 @@ export class CardListComponent implements OnInit {
         }
         case 'Rarity': {
           filterData = data.rarity;
+          break;
+        }
+        case 'Text': {
+          filterData = data.text;
           break;
         }
       }

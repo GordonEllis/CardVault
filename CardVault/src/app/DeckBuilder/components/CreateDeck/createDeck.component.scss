@@ -9,6 +9,12 @@ $width: 100%;
   width: $percent;
 }
 
+button {
+  line-height: initial;
+  white-space: normal;
+  width: 100px;
+}
+
 .grid-container {
   @include default-styles(100%);
 
@@ -41,11 +47,11 @@ $width: 100%;
 
     &.buttons {
       @include set-width(20%); 
-      display: flex;
+      display: flex;  
       justify-content: flex-end;
     }
-
-    margin: 0 1rem 0 1rem;
+    
+    margin: 0 0 0 1rem;
     display: inline-block;
   }
 

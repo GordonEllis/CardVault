@@ -16,14 +16,24 @@ const initialState: DeckBuilderState = {
 
 export function DeckBuilderReducer(state = initialState, action: DeckBuilderActions.DeckBulderActions): DeckBuilderState {
   switch (action.type) {
-    case DeckBuilderActions.CreateDeckSuccess.TYPE: {
-      console.log(action.items);
+    case DeckBuilderActions.AddCardsToActiveDeck.TYPE: {
       const currentActiveDeck = state.activeEditDeck;
-      currentActiveDeck.deckCards = action.items;
+      const filterCards =  action.items.filter(c => !currentActiveDeck.deckCards.find(a => a.cardId === c.id ))
+      currentActiveDeck.deckCards =
+      [...currentActiveDeck.deckCards, ...filterCards.map(i => ({ deckId: -1, cardId: i.id, quantity: i.quantity }))];
 
       return {
         ...state,
-        activeEditDeck:  { ...currentActiveDeck }
+        activeEditDeck:  currentActiveDeck
+      };
+    }
+    case DeckBuilderActions.RemoveCardsFromActiveDeck.TYPE: {
+      const currentActiveDeck = state.activeEditDeck;
+      currentActiveDeck.deckCards = currentActiveDeck.deckCards.filter(c => !action.items.find(a => a.id === c.cardId ));
+      
+      return {
+        ...state,
+        activeEditDeck:  currentActiveDeck
       };
     }
     case DeckBuilderActions.DeleteDeckSuccess.TYPE: {

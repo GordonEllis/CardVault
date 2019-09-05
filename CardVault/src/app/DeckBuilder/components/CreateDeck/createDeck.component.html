@@ -26,14 +26,16 @@
              (blur)="descriptionChanged($event);" />
     </div>
     <div class="grid-row">
-      <label></label>
-      <div></div>
+      <label>Card Count: </label>
+      <div>{{cardCount}}</div>
     </div>
   </div>
 
 
   <div class="grid-column buttons">
+    <button mat-raised-button (click)="addBasicLands()">Add Basic Lands</button>
     <button mat-raised-button (click)="addCards()">Add Cards</button>
+    <button mat-raised-button (click)="removeCards()">Remove Cards</button>
     <button mat-raised-button (click)="saveDeck()">Save Deck</button>
   </div>
 </div>

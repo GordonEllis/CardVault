@@ -1,11 +1,65 @@
+$dataCellHeight: 204px;
+$dataCellWidth: 146px;
+$selectTriggerWidth: 10em;
+$rowColour: white;
+$headerColour: lightgrey;
+$textColor: black;
+
 .description-filter {
   display: inline-flex;
 }
 
-.mat-select-trigger {
-  width: 10em;
-  
-  .mat-select-value {
+input {
+  width: $dataCellWidth;
+}
 
+.mat-header-row {
+  background-color: $headerColour;
+}
+
+mat-checkbox {
+  &.mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background {
+   background: rgb(0,178,0);
+  }
+}
+
+.mat-row {
+  background-color: $rowColour;
+}
+
+.mat-select-trigger {
+  width: $selectTriggerWidth;  
+}
+
+.mat-header-cell {
+  padding-left: 0px;
+  justify-content: center;  
+  border-right-style: solid;
+  color: $textColor;
+  max-width: $dataCellWidth;
+}
+
+.dataCell {
+  height: $dataCellHeight;
+  justify-content: center;  
+  border-right-style: solid;
+  max-width: $dataCellWidth;
+  color: $textColor;
+}
+
+.mat-cell {
+  padding-left: 0px;
+  max-width: $dataCellWidth;
+}
+
+.selectBox {
+  border-bottom-style: none;
+  justify-items: center;
+//  padding-right: 13px;
+
+  &.mat-header-cell {
+    padding: 0px 7px 0px 6px;
+    display: inline-grid;
+    border-right-style: none;
   }
 }

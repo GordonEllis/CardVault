@@ -20,9 +20,15 @@ export class SaveDeckSuccess implements Action {
   constructor(public item: Deck) { }
 }
 
-export class CreateDeck implements Action {
-  public static readonly TYPE = '[DeckBuilder] Create Deck';
-  readonly type = CreateDeck.TYPE;
+export class AddCardsToActiveDeck implements Action {
+  public static readonly TYPE = '[DeckBuilder] Add Cards To Active Deck';
+  readonly type = AddCardsToActiveDeck.TYPE;
+  constructor(public items: CardItem[]) { }
+}
+
+export class RemoveCardsFromActiveDeck implements Action {
+  public static readonly TYPE = '[DeckBuilder] Remove Cards From Active Deck';
+  readonly type = RemoveCardsFromActiveDeck.TYPE;
   constructor(public items: CardItem[]) { }
 }
 
@@ -69,8 +75,8 @@ export class DeleteDeckSuccess implements Action {
 
 export type DeckBulderActions =
     SetActiveDeck |
-    CreateDeck |
-    CreateDeckSuccess |
+    AddCardsToActiveDeck |
+    RemoveCardsFromActiveDeck |
     SaveDeck |
     SaveDeckSuccess |
     UpdateDeck |

@@ -1,15 +1,22 @@
 import { NgModule } from '@angular/core';
 import { MaterialModule } from './material.module';
 import { CardTableComponent } from './CardTable';
+import { FilterDialogComponent } from './filterDialog';
+import { LandDialogComponent } from './landDialog';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
 const COMPONENTS = [
-  CardTableComponent
+  CardTableComponent,
+  FilterDialogComponent,
+  LandDialogComponent,
 ]
 
 const MODULES = [
   BrowserModule,
-  MaterialModule
+  FormsModule,
+  MaterialModule,
+  ReactiveFormsModule
 ];
 
 @NgModule({

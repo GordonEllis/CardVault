@@ -32,16 +32,8 @@ export const getActiveDeckCardFull = createSelector(
   getCards,
   (deckCards: DeckBuilderState,
   fullCardData: CardItem[]) => {
-    const hydratedData: CardItem[] = [];
-    console.log(deckCards.activeEditDeck.deckCards);
-    if(deckCards.activeEditDeck.deckCards) {
-      deckCards.activeEditDeck.deckCards.forEach(d => {
-        let fullDeckData: CardItem = fullCardData.find(f => f.id === d.cardId);
-        fullDeckData.quantity = d.quantity;
-        hydratedData.push(fullDeckData);
-      });
-    }
-    
-    return hydratedData;
+    return deckCards.activeEditDeck.deckCards.map(d => {    
+      return {...fullCardData.find(f => f.id === d.cardId), quantity: d.quantity};
+    }); 
   }
 );

@@ -1,0 +1,47 @@
+<h1 mat-dialog-title>Set Filters</h1>
+<div mat-dialog-content>
+  <form [formGroup]="filterSetting" novalidate>
+      <div class="form">
+    <div class="textInputs">
+      <mat-form-field>
+        <label> Name: </label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+      <mat-form-field>
+        <label> Cost: </label>
+        <input matInput formControlName="cost">
+      </mat-form-field>
+      <mat-form-field>
+        <label> Type: </label>
+        <input matInput formControlName="type">
+      </mat-form-field>
+      <mat-form-field>
+        <label> Text: </label>
+        <input matInput formControlName="text">
+      </mat-form-field>
+    </div>
+    <div>
+      <label> Rarity: </label>
+      <mat-selection-list dense formControlName="rarity">
+        <mat-list-option checkboxPosition="before" value="common"> Common </mat-list-option>
+        <mat-list-option checkboxPosition="before" value="uncommon"> Uncommon </mat-list-option>
+        <mat-list-option checkboxPosition="before" value="rare"> Rare </mat-list-option>
+        <mat-list-option checkboxPosition="before" value="mythic"> Mythic </mat-list-option>
+      </mat-selection-list>
+    </div>
+    <div>
+      <label> Colors: </label>
+      <mat-selection-list dense formControlName="colors">
+        <mat-list-option checkboxPosition="before" *ngFor="let land of colors" value="{{ land.type }}">
+          <img src= "{{ land.url }}">
+        </mat-list-option> 
+      </mat-selection-list>
+    </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="onSubmit()">Add Condition</button>
+  <button mat-button (click)="onSubmit()">Submit</button>
+</div>

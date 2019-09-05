@@ -9,6 +9,7 @@ import { LoadDecks } from '@cv/DeckBuilder/store/';
 @Component({
   selector: 'card-vault',
   templateUrl: `app.component.html`,
+  styleUrls: ['./app.component.scss'],
 })
 
 export class AppComponent  implements OnInit { 

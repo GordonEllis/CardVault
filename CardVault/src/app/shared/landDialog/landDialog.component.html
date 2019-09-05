@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Add Basic Lands</h1>
+<div mat-dialog-content>
+  <ng-container *ngFor= "let basicLand of basicLands">
+  <div class="increment">
+    <input matInput [value]="basicLand.count">
+    <img src= "{{ basicLand.url }}">
+    <button mat-button (click)="basicLand.count = basicLand.count + 1"> <mat-icon>add_circle_outline</mat-icon> </button>
+    <button mat-button (click)="basicLand.count > 0 ? basicLand.count = basicLand.count - 1 : 0"> <mat-icon>remove_circle_outline</mat-icon> </button>
+  </div>
+  </ng-container>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSubmit()">Submit</button>
+</div>

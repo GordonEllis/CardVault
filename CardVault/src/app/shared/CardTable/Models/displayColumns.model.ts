@@ -12,6 +12,7 @@ export const CardListColumns: DisplayColumns[] = [
   { columnDef: 'type', headerText: 'Type', editable: false },
   { columnDef: 'setName', headerText: 'Set', editable: false },
   { columnDef: 'rarity', headerText: 'Rarity', editable: false },
+  { columnDef: 'text', headerText: 'Text', editable: false },
 ];
 
 export const DeckListColumns: DisplayColumns[] = [
@@ -20,4 +21,5 @@ export const DeckListColumns: DisplayColumns[] = [
   { columnDef: 'manaCost', headerText: 'Cost', editable: false },
   { columnDef: 'quantity', headerText: 'Own', editable: true },
   { columnDef: 'type', headerText: 'Type', editable: false },
+  { columnDef: 'text', headerText: 'Text', editable: false },
 ];
